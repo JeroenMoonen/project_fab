@@ -1,7 +1,8 @@
 # From A Bottle / Drinksterr
 
-- [Login page design](https://www.behance.net/gallery/64483559/Login-Screen-Personal-Nutrition-Dite-App-Design)
-- []
+- [Login page design](https://www.nintyzeros.com/2021/01/flutter-login-signup.html)
+- [Register page design](https://www.nintyzeros.com/2021/01/flutter-login-signup.html)
+- [Forgot password page design](https://www.nintyzeros.com/2021/01/flutter-login-signup.html)
 
 ## Getting Started
 
