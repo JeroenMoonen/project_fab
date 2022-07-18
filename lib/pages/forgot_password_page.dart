@@ -108,7 +108,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             borderRadius: BorderRadius.circular(40),
                           ),
                           child: const Text(
-                            "Sign Up",
+                            "Send",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
