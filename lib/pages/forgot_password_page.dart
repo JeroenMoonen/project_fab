@@ -3,27 +3,20 @@ import 'package:project_fab/pages/login_page.dart';
 import 'package:project_fab/utils/datepicker.dart';
 import 'package:project_fab/utils/input.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   DateTime date = DateTime.now();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _dateOfBirthController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordRepeatController =
-      TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
-    _dateOfBirthController.dispose();
-    _passwordController.dispose();
-    _passwordRepeatController.dispose();
 
     super.dispose();
   }
@@ -61,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const <Widget>[
                         Text(
-                          "Registreren",
+                          "Forgot password",
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -71,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 20,
                         ),
                         Text(
-                          "Maak een account aan",
+                          "Fill in your email to reset your password",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,
@@ -87,30 +80,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Column(
                         children: [
                           makeInput(
-                            label: "E-mail",
+                            label: "Email",
                             controller: _emailController,
                           ),
-                          makeDatepicker(
-                            label: 'Date of birth',
-                            date: date,
-                            controller: _dateOfBirthController,
-                            context: context,
-                            onDateTimeChanged: (DateTime newDate) {
-                              _dateOfBirthController.text =
-                                  '${newDate.day}/${newDate.month}/${newDate.year}';
-
-                              setState(() => date = newDate);
-                            },
-                          ),
-                          makeInput(
-                              label: "Password",
-                              controller: _passwordController,
-                              obsureText: true),
-                          makeInput(
-                            label: "Confirm Pasword",
-                            controller: _passwordRepeatController,
-                            obsureText: true,
-                          )
                         ],
                       ),
                     ),

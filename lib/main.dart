@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/forgot_password_page.dart';
 import 'package:project_fab/pages/login_page.dart';
 import 'package:project_fab/pages/register_page.dart';
 import 'package:project_fab/config.dart';
@@ -30,6 +31,14 @@ class MyApp extends StatelessWidget {
         Icons.home,
         () => Navigator.of(context).push<void>(MaterialPageRoute(
           builder: (c) => RegisterPage(),
+        )),
+      ),
+      Sample(
+        'Forgot password page',
+        'Wachtwoord vergeten page',
+        Icons.home,
+        () => Navigator.of(context).push<void>(MaterialPageRoute(
+          builder: (c) => ForgotPasswordPage(),
         )),
       ),
     ];

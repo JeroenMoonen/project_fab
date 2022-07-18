@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/forgot_password_page.dart';
+import 'package:project_fab/pages/register_page.dart';
 import 'package:project_fab/utils/input.dart';
 
 class LoginPage extends StatelessWidget {
@@ -117,17 +119,45 @@ class LoginPage extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    Text(
-                      "Dont have an account yet?",
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const RegisterPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Dont have an account yet?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    Text(
-                      "Forgot password",
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const ForgotPasswordPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Forgot password",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ],
                 ),
