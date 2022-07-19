@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/pages/login_page.dart';
-import 'package:project_fab/utils/datepicker.dart';
 import 'package:project_fab/utils/input.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -42,7 +41,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             child: Column(

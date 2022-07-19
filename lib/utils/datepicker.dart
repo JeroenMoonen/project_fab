@@ -35,18 +35,4 @@ Widget makeDatepicker({label, date, controller, onDateTimeChanged, context}) {
       ),
     ),
   );
-
-  return CupertinoButton(
-    onPressed: () => _showDialog(
-      CupertinoDatePicker(
-        initialDateTime: date,
-        mode: CupertinoDatePickerMode.date,
-        use24hFormat: true,
-        onDateTimeChanged: onDateTimeChanged,
-      ),
-    ),
-    child: Text(
-      '${date.month}-${date.day}-${date.year}',
-    ),
-  );
 }

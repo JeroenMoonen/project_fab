@@ -38,7 +38,7 @@ class AppIndex extends StatelessWidget {
         'Registreer page',
         Icons.home,
         () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => RegisterPage(),
+          builder: (c) => const RegisterPage(),
         )),
       ),
       Sample(
@@ -46,7 +46,7 @@ class AppIndex extends StatelessWidget {
         'Wachtwoord vergeten page',
         Icons.home,
         () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => ForgotPasswordPage(),
+          builder: (c) => const ForgotPasswordPage(),
         )),
       ),
     ];
