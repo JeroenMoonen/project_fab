@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/pages/login_page.dart';
+import 'package:project_fab/utils/checkbox.dart';
 import 'package:project_fab/utils/datepicker.dart';
 import 'package:project_fab/utils/input.dart';
 
@@ -12,11 +13,21 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   DateTime date = DateTime.now();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _dateOfBirthController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordRepeatController =
-      TextEditingController();
+  late final TextEditingController _emailController;
+  late final TextEditingController _dateOfBirthController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _passwordRepeatController;
+  bool isOldEnough = false;
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _dateOfBirthController = TextEditingController();
+    _passwordController = TextEditingController();
+    _passwordRepeatController = TextEditingController();
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -110,7 +121,17 @@ class _RegisterPageState extends State<RegisterPage> {
                             label: "Confirm Pasword",
                             controller: _passwordRepeatController,
                             obsureText: true,
-                          )
+                          ),
+                          // makeCheckbox(
+                          //   label: 'I\'m older than 18',
+                          //   value: isOldEnough,
+                          //   onChanged: (bool? value) {
+                          //     setState(() {
+                          //       // print(value);
+                          //       isOldEnough = value!;
+                          //     });
+                          //   },
+                          // ) //
                         ],
                       ),
                     ),

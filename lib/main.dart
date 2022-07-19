@@ -4,13 +4,21 @@ import 'package:project_fab/pages/login_page.dart';
 import 'package:project_fab/pages/register_page.dart';
 import 'package:project_fab/config.dart';
 
-void main() => runApp(const MaterialApp(
-      home: MyApp(),
+void main() {
+  runApp(
+    MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const AppIndex(),
       debugShowCheckedModeBanner: false,
-    ));
+      // title: '',
+    ),
+  );
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class AppIndex extends StatelessWidget {
+  const AppIndex({Key? key}) : super(key: key);
 
   //todo: check if we have a token in our storage. If not: show login page.
 
