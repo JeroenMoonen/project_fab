@@ -29,6 +29,11 @@ Widget makeInput({label, onTap, controller, obsureText = false}) {
               color: Colors.grey,
             ),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.grey,
