@@ -11,8 +11,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _pageController = PageController();
-  int _currentIndex = 0;
+  late PageController _pageController;
+  int _activePageIndex = 0;
+
+  @override
+  void initState() {
+    _pageController = PageController();
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -26,6 +33,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _activePageIndex = index;
+          });
+        },
         children: const [
           FeedPage(),
           PeoplePage(),
@@ -33,13 +45,13 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          _pageController.jumpToPage(value);
+        onTap: (index) {
+          _pageController.jumpToPage(index);
           setState(() {
-            _currentIndex = value;
+            _activePageIndex = index;
           });
         },
-        currentIndex: _currentIndex,
+        currentIndex: _activePageIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
