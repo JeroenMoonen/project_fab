@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/components/datepicker.dart';
+import 'package:project_fab/components/input.dart';
 import 'package:project_fab/pages/login_page.dart';
-import 'package:project_fab/utils/datepicker.dart';
-import 'package:project_fab/utils/input.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

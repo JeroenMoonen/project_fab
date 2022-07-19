@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:project_fab/utils/input.dart';
+import 'package:project_fab/components/input.dart';
 
 Widget makeDatepicker({label, date, controller, onDateTimeChanged, context}) {
   void _showDialog(Widget child) {

@@ -1,100 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:project_fab/pages/forgot_password_page.dart';
-import 'package:project_fab/pages/login_page.dart';
-import 'package:project_fab/pages/register_page.dart';
-import 'package:project_fab/config.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:project_fab/app.dart';
+import 'app.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const AppIndex(),
-      debugShowCheckedModeBanner: false,
-      // title: '',
-    ),
+void main() async {
+  await runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      // await Firebase.initializeApp();
+      if (kDebugMode) {
+        // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+        // await FirebasePerformance.instance.setPerformanceCollectionEnabled(false);
+      }
+      await dotenv.load(
+        fileName: kDebugMode ? 'environments/dev.env' : 'environments/.env',
+      );
+      // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+      ErrorWidget.builder = (FlutterErrorDetails error) {
+        Zone.current.handleUncaughtError(error.exception, error.stack!);
+        return ErrorWidget(error.exception);
+      };
+
+      runApp(const MyApp());
+    },
+    (exception, stackTrace) {
+      if (kDebugMode) {
+        print(exception.toString());
+      }
+    },
   );
-}
-
-class AppIndex extends StatelessWidget {
-  const AppIndex({Key? key}) : super(key: key);
-
-  //todo: check if we have a token in our storage. If not: show login page.
-
-  @override
-  Widget build(BuildContext context) {
-    final samples = [
-      Sample(
-        'Login page',
-        'Inlogpagina',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const LoginPage(),
-        )),
-      ),
-      Sample(
-        'Register page',
-        'Registreer page',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const RegisterPage(),
-        )),
-      ),
-      Sample(
-        'Forgot password page',
-        'Wachtwoord vergeten page',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const ForgotPasswordPage(),
-        )),
-      ),
-    ];
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          appName,
-        ),
-      ),
-      body:
-          ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
-    );
-  }
-}
-
-class SampleItem extends StatelessWidget {
-  const SampleItem({
-    required this.item,
-    Key? key,
-  }) : super(key: key);
-  final Sample item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () => item.onTap(),
-        child: ListTile(
-          leading: Icon(item.icon),
-          title: Text(
-            item.title,
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          subtitle: Text(
-            item.description,
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Sample {
-  const Sample(this.title, this.description, this.icon, this.onTap);
-  final String title;
-  final String description;
-  final IconData icon;
-  final Function onTap;
+  // FirebaseCrashlytics.instance.recordError(exception, stackTrace));
 }

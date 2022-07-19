@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/components/input.dart';
 import 'package:project_fab/pages/forgot_password_page.dart';
 import 'package:project_fab/pages/register_page.dart';
-import 'package:project_fab/utils/input.dart';
+import 'package:project_fab/services/authentication_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -86,10 +87,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: Column(
                     children: [
-                      makeInput(label: "E-mail"),
+                      makeInput(
+                        label: "E-mail",
+                        controller: _emailController,
+                      ),
                       makeInput(
                         label: "Password",
                         obsureText: true,
+                        controller: _passwordController,
                       ),
                     ],
                   ),
@@ -123,7 +128,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: MaterialButton(
                       minWidth: double.infinity,
                       height: 60,
-                      onPressed: () {},
+                      onPressed: () {
+                        AuthenticationService.authenticate(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                      },
                       color: Colors.orangeAccent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
