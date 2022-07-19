@@ -9,7 +9,8 @@ import 'interceptors/error_interceptor.dart';
 import 'interceptors/user_agent_interceptor.dart';
 
 class HttpClient {
-  static String get serverUrl => dotenv.env['SERVER_URL']!;
+  static String get authenticationUrl => dotenv.env['AUTHENTICATION_URL']!;
+  static String get apiUrl => dotenv.env['API_URL']!;
 
   static CacheOptions defaultCacheOptions = CacheOptions(
     // A default store is required for interceptor.

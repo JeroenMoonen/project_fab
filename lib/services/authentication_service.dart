@@ -9,7 +9,7 @@ class AuthenticationService {
     // var JWT = await storage.read(key: 'jwt');
 
     var response = await HttpClient.create()
-        .post('${HttpClient.serverUrl}/authentication_token', data: {
+        .post('${HttpClient.authenticationUrl}/authentication_token', data: {
       'email': email,
       'password': password,
     });

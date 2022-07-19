@@ -6,12 +6,13 @@ import 'package:project_fab/services/jwt_storage.dart';
 
 class AuthInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (!options.path.contains('/authentication_token')) {
-      var token = JwtStorage().getJwt();
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    if (!options.path.contains('authentication_token')) {
+      var token = await JwtStorage().getJwt();
 
       if (kDebugMode) {
-        print('Got token $token');
+        print('Use token: $token');
       }
       options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
     }

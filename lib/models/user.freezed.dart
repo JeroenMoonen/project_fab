@@ -20,10 +20,10 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError; //String? gender,
+  String get email => throw _privateConstructorUsedError; //String? gender,
   String? get dateOfBirth => throw _privateConstructorUsedError;
   String? get about => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
@@ -38,10 +38,10 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
+      {int id,
       String? firstName,
       String? lastName,
-      String? email,
+      String email,
       String? dateOfBirth,
       String? about,
       String? location});
@@ -69,7 +69,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       dateOfBirth: dateOfBirth == freezed
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
@@ -104,10 +104,10 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$_UserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
+      {int id,
       String? firstName,
       String? lastName,
-      String? email,
+      String email,
       String? dateOfBirth,
       String? about,
       String? location});
@@ -136,7 +136,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -148,7 +148,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       dateOfBirth: dateOfBirth == freezed
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
@@ -169,10 +169,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_User implements _User {
   _$_User(
-      {this.id,
+      {required this.id,
       this.firstName,
       this.lastName,
-      this.email,
+      required this.email,
       this.dateOfBirth,
       this.about,
       this.location});
@@ -180,13 +180,13 @@ class _$_User implements _User {
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final int? id;
+  final int id;
   @override
   final String? firstName;
   @override
   final String? lastName;
   @override
-  final String? email;
+  final String email;
 //String? gender,
   @override
   final String? dateOfBirth;
@@ -242,10 +242,10 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {final int? id,
+      {required final int id,
       final String? firstName,
       final String? lastName,
-      final String? email,
+      required final String email,
       final String? dateOfBirth,
       final String? about,
       final String? location}) = _$_User;
@@ -253,13 +253,13 @@ abstract class _User implements User {
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  int? get id;
+  int get id;
   @override
   String? get firstName;
   @override
   String? get lastName;
   @override
-  String? get email;
+  String get email;
   @override //String? gender,
   String? get dateOfBirth;
   @override

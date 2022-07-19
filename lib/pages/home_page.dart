@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/feed_page.dart';
 import 'package:project_fab/pages/forgot_password_page.dart';
 import 'package:project_fab/pages/login_page.dart';
 import 'package:project_fab/pages/register_page.dart';
@@ -18,6 +19,14 @@ class HomePage extends StatelessWidget {
         Icons.home,
         () => Navigator.of(context).push<void>(MaterialPageRoute(
           builder: (c) => const LoginPage(),
+        )),
+      ),
+      Sample(
+        'Feed page',
+        'Feed',
+        Icons.home,
+        () => Navigator.of(context).push<void>(MaterialPageRoute(
+          builder: (c) => const FeedPage(),
         )),
       ),
       Sample(

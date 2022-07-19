@@ -20,12 +20,12 @@ Whisky _$WhiskyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Whisky {
-  int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   int? get strength => throw _privateConstructorUsedError;
   String? get vintage => throw _privateConstructorUsedError;
   String? get bottled => throw _privateConstructorUsedError;
-  int? get content => throw _privateConstructorUsedError;
+  int get content => throw _privateConstructorUsedError;
   int? get numberOfBottles => throw _privateConstructorUsedError;
   String? get bottlingSerie => throw _privateConstructorUsedError;
   String? get bottleCode => throw _privateConstructorUsedError;
@@ -33,11 +33,11 @@ mixin _$Whisky {
   String? get caskNumber => throw _privateConstructorUsedError;
   String? get caskType =>
       throw _privateConstructorUsedError; //String? category,
-//String? brand,
-  bool? get bottlerIsDistillery =>
-      throw _privateConstructorUsedError; //String? bottler,
-//String? distillery,
-  String? get strngthUnit => throw _privateConstructorUsedError;
+  Brand? get brand => throw _privateConstructorUsedError;
+  bool get bottlerIsDistillery => throw _privateConstructorUsedError;
+  Bottler? get bottler => throw _privateConstructorUsedError;
+  Distillery? get distillery => throw _privateConstructorUsedError;
+  String? get strengthUnit => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,20 +49,27 @@ abstract class $WhiskyCopyWith<$Res> {
   factory $WhiskyCopyWith(Whisky value, $Res Function(Whisky) then) =
       _$WhiskyCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      String? name,
+      {int id,
+      String name,
       int? strength,
       String? vintage,
       String? bottled,
-      int? content,
+      int content,
       int? numberOfBottles,
       String? bottlingSerie,
       String? bottleCode,
       String? statedAge,
       String? caskNumber,
       String? caskType,
-      bool? bottlerIsDistillery,
-      String? strngthUnit});
+      Brand? brand,
+      bool bottlerIsDistillery,
+      Bottler? bottler,
+      Distillery? distillery,
+      String? strengthUnit});
+
+  $BrandCopyWith<$Res>? get brand;
+  $BottlerCopyWith<$Res>? get bottler;
+  $DistilleryCopyWith<$Res>? get distillery;
 }
 
 /// @nodoc
@@ -87,18 +94,21 @@ class _$WhiskyCopyWithImpl<$Res> implements $WhiskyCopyWith<$Res> {
     Object? statedAge = freezed,
     Object? caskNumber = freezed,
     Object? caskType = freezed,
+    Object? brand = freezed,
     Object? bottlerIsDistillery = freezed,
-    Object? strngthUnit = freezed,
+    Object? bottler = freezed,
+    Object? distillery = freezed,
+    Object? strengthUnit = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       strength: strength == freezed
           ? _value.strength
           : strength // ignore: cast_nullable_to_non_nullable
@@ -114,7 +124,7 @@ class _$WhiskyCopyWithImpl<$Res> implements $WhiskyCopyWith<$Res> {
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       numberOfBottles: numberOfBottles == freezed
           ? _value.numberOfBottles
           : numberOfBottles // ignore: cast_nullable_to_non_nullable
@@ -139,15 +149,60 @@ class _$WhiskyCopyWithImpl<$Res> implements $WhiskyCopyWith<$Res> {
           ? _value.caskType
           : caskType // ignore: cast_nullable_to_non_nullable
               as String?,
+      brand: brand == freezed
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as Brand?,
       bottlerIsDistillery: bottlerIsDistillery == freezed
           ? _value.bottlerIsDistillery
           : bottlerIsDistillery // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      strngthUnit: strngthUnit == freezed
-          ? _value.strngthUnit
-          : strngthUnit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bottler: bottler == freezed
+          ? _value.bottler
+          : bottler // ignore: cast_nullable_to_non_nullable
+              as Bottler?,
+      distillery: distillery == freezed
+          ? _value.distillery
+          : distillery // ignore: cast_nullable_to_non_nullable
+              as Distillery?,
+      strengthUnit: strengthUnit == freezed
+          ? _value.strengthUnit
+          : strengthUnit // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+
+  @override
+  $BrandCopyWith<$Res>? get brand {
+    if (_value.brand == null) {
+      return null;
+    }
+
+    return $BrandCopyWith<$Res>(_value.brand!, (value) {
+      return _then(_value.copyWith(brand: value));
+    });
+  }
+
+  @override
+  $BottlerCopyWith<$Res>? get bottler {
+    if (_value.bottler == null) {
+      return null;
+    }
+
+    return $BottlerCopyWith<$Res>(_value.bottler!, (value) {
+      return _then(_value.copyWith(bottler: value));
+    });
+  }
+
+  @override
+  $DistilleryCopyWith<$Res>? get distillery {
+    if (_value.distillery == null) {
+      return null;
+    }
+
+    return $DistilleryCopyWith<$Res>(_value.distillery!, (value) {
+      return _then(_value.copyWith(distillery: value));
+    });
   }
 }
 
@@ -157,20 +212,30 @@ abstract class _$$_WhiskyCopyWith<$Res> implements $WhiskyCopyWith<$Res> {
       __$$_WhiskyCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      String? name,
+      {int id,
+      String name,
       int? strength,
       String? vintage,
       String? bottled,
-      int? content,
+      int content,
       int? numberOfBottles,
       String? bottlingSerie,
       String? bottleCode,
       String? statedAge,
       String? caskNumber,
       String? caskType,
-      bool? bottlerIsDistillery,
-      String? strngthUnit});
+      Brand? brand,
+      bool bottlerIsDistillery,
+      Bottler? bottler,
+      Distillery? distillery,
+      String? strengthUnit});
+
+  @override
+  $BrandCopyWith<$Res>? get brand;
+  @override
+  $BottlerCopyWith<$Res>? get bottler;
+  @override
+  $DistilleryCopyWith<$Res>? get distillery;
 }
 
 /// @nodoc
@@ -196,18 +261,21 @@ class __$$_WhiskyCopyWithImpl<$Res> extends _$WhiskyCopyWithImpl<$Res>
     Object? statedAge = freezed,
     Object? caskNumber = freezed,
     Object? caskType = freezed,
+    Object? brand = freezed,
     Object? bottlerIsDistillery = freezed,
-    Object? strngthUnit = freezed,
+    Object? bottler = freezed,
+    Object? distillery = freezed,
+    Object? strengthUnit = freezed,
   }) {
     return _then(_$_Whisky(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       strength: strength == freezed
           ? _value.strength
           : strength // ignore: cast_nullable_to_non_nullable
@@ -223,7 +291,7 @@ class __$$_WhiskyCopyWithImpl<$Res> extends _$WhiskyCopyWithImpl<$Res>
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       numberOfBottles: numberOfBottles == freezed
           ? _value.numberOfBottles
           : numberOfBottles // ignore: cast_nullable_to_non_nullable
@@ -248,13 +316,25 @@ class __$$_WhiskyCopyWithImpl<$Res> extends _$WhiskyCopyWithImpl<$Res>
           ? _value.caskType
           : caskType // ignore: cast_nullable_to_non_nullable
               as String?,
+      brand: brand == freezed
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as Brand?,
       bottlerIsDistillery: bottlerIsDistillery == freezed
           ? _value.bottlerIsDistillery
           : bottlerIsDistillery // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      strngthUnit: strngthUnit == freezed
-          ? _value.strngthUnit
-          : strngthUnit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bottler: bottler == freezed
+          ? _value.bottler
+          : bottler // ignore: cast_nullable_to_non_nullable
+              as Bottler?,
+      distillery: distillery == freezed
+          ? _value.distillery
+          : distillery // ignore: cast_nullable_to_non_nullable
+              as Distillery?,
+      strengthUnit: strengthUnit == freezed
+          ? _value.strengthUnit
+          : strengthUnit // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -264,28 +344,31 @@ class __$$_WhiskyCopyWithImpl<$Res> extends _$WhiskyCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Whisky implements _Whisky {
   _$_Whisky(
-      {this.id,
-      this.name,
+      {required this.id,
+      required this.name,
       this.strength,
       this.vintage,
       this.bottled,
-      this.content,
+      required this.content,
       this.numberOfBottles,
       this.bottlingSerie,
       this.bottleCode,
       this.statedAge,
       this.caskNumber,
       this.caskType,
-      this.bottlerIsDistillery,
-      this.strngthUnit});
+      this.brand = null,
+      this.bottlerIsDistillery = false,
+      this.bottler = null,
+      this.distillery = null,
+      this.strengthUnit});
 
   factory _$_Whisky.fromJson(Map<String, dynamic> json) =>
       _$$_WhiskyFromJson(json);
 
   @override
-  final int? id;
+  final int id;
   @override
-  final String? name;
+  final String name;
   @override
   final int? strength;
   @override
@@ -293,7 +376,7 @@ class _$_Whisky implements _Whisky {
   @override
   final String? bottled;
   @override
-  final int? content;
+  final int content;
   @override
   final int? numberOfBottles;
   @override
@@ -307,17 +390,24 @@ class _$_Whisky implements _Whisky {
   @override
   final String? caskType;
 //String? category,
-//String? brand,
   @override
-  final bool? bottlerIsDistillery;
-//String? bottler,
-//String? distillery,
+  @JsonKey()
+  final Brand? brand;
   @override
-  final String? strngthUnit;
+  @JsonKey()
+  final bool bottlerIsDistillery;
+  @override
+  @JsonKey()
+  final Bottler? bottler;
+  @override
+  @JsonKey()
+  final Distillery? distillery;
+  @override
+  final String? strengthUnit;
 
   @override
   String toString() {
-    return 'Whisky(id: $id, name: $name, strength: $strength, vintage: $vintage, bottled: $bottled, content: $content, numberOfBottles: $numberOfBottles, bottlingSerie: $bottlingSerie, bottleCode: $bottleCode, statedAge: $statedAge, caskNumber: $caskNumber, caskType: $caskType, bottlerIsDistillery: $bottlerIsDistillery, strngthUnit: $strngthUnit)';
+    return 'Whisky(id: $id, name: $name, strength: $strength, vintage: $vintage, bottled: $bottled, content: $content, numberOfBottles: $numberOfBottles, bottlingSerie: $bottlingSerie, bottleCode: $bottleCode, statedAge: $statedAge, caskNumber: $caskNumber, caskType: $caskType, brand: $brand, bottlerIsDistillery: $bottlerIsDistillery, bottler: $bottler, distillery: $distillery, strengthUnit: $strengthUnit)';
   }
 
   @override
@@ -341,10 +431,14 @@ class _$_Whisky implements _Whisky {
             const DeepCollectionEquality()
                 .equals(other.caskNumber, caskNumber) &&
             const DeepCollectionEquality().equals(other.caskType, caskType) &&
+            const DeepCollectionEquality().equals(other.brand, brand) &&
             const DeepCollectionEquality()
                 .equals(other.bottlerIsDistillery, bottlerIsDistillery) &&
+            const DeepCollectionEquality().equals(other.bottler, bottler) &&
             const DeepCollectionEquality()
-                .equals(other.strngthUnit, strngthUnit));
+                .equals(other.distillery, distillery) &&
+            const DeepCollectionEquality()
+                .equals(other.strengthUnit, strengthUnit));
   }
 
   @JsonKey(ignore: true)
@@ -363,8 +457,11 @@ class _$_Whisky implements _Whisky {
       const DeepCollectionEquality().hash(statedAge),
       const DeepCollectionEquality().hash(caskNumber),
       const DeepCollectionEquality().hash(caskType),
+      const DeepCollectionEquality().hash(brand),
       const DeepCollectionEquality().hash(bottlerIsDistillery),
-      const DeepCollectionEquality().hash(strngthUnit));
+      const DeepCollectionEquality().hash(bottler),
+      const DeepCollectionEquality().hash(distillery),
+      const DeepCollectionEquality().hash(strengthUnit));
 
   @JsonKey(ignore: true)
   @override
@@ -381,27 +478,30 @@ class _$_Whisky implements _Whisky {
 
 abstract class _Whisky implements Whisky {
   factory _Whisky(
-      {final int? id,
-      final String? name,
+      {required final int id,
+      required final String name,
       final int? strength,
       final String? vintage,
       final String? bottled,
-      final int? content,
+      required final int content,
       final int? numberOfBottles,
       final String? bottlingSerie,
       final String? bottleCode,
       final String? statedAge,
       final String? caskNumber,
       final String? caskType,
-      final bool? bottlerIsDistillery,
-      final String? strngthUnit}) = _$_Whisky;
+      final Brand? brand,
+      final bool bottlerIsDistillery,
+      final Bottler? bottler,
+      final Distillery? distillery,
+      final String? strengthUnit}) = _$_Whisky;
 
   factory _Whisky.fromJson(Map<String, dynamic> json) = _$_Whisky.fromJson;
 
   @override
-  int? get id;
+  int get id;
   @override
-  String? get name;
+  String get name;
   @override
   int? get strength;
   @override
@@ -409,7 +509,7 @@ abstract class _Whisky implements Whisky {
   @override
   String? get bottled;
   @override
-  int? get content;
+  int get content;
   @override
   int? get numberOfBottles;
   @override
@@ -423,11 +523,15 @@ abstract class _Whisky implements Whisky {
   @override
   String? get caskType;
   @override //String? category,
-//String? brand,
-  bool? get bottlerIsDistillery;
-  @override //String? bottler,
-//String? distillery,
-  String? get strngthUnit;
+  Brand? get brand;
+  @override
+  bool get bottlerIsDistillery;
+  @override
+  Bottler? get bottler;
+  @override
+  Distillery? get distillery;
+  @override
+  String? get strengthUnit;
   @override
   @JsonKey(ignore: true)
   _$$_WhiskyCopyWith<_$_Whisky> get copyWith =>
