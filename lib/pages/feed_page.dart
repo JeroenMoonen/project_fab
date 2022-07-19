@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
+import 'package:project_fab/pages/add_checkin.dart';
 import 'package:project_fab/services/checkin_service.dart';
 
 class FeedPage extends StatefulWidget {
@@ -20,6 +22,24 @@ class _FeedPageState extends State<FeedPage> {
         backgroundColor: Colors.white,
       ),
       body: _createBody(context),
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        backgroundColor: primaryColor,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const AddCheckin(),
+            ),
+          );
+        },
+        tooltip: 'Add Activity',
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
     );
   }
 }

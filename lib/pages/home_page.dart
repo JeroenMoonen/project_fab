@@ -1,61 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/pages/feed_page.dart';
-import 'package:project_fab/pages/forgot_password_page.dart';
-import 'package:project_fab/pages/login_page.dart';
-import 'package:project_fab/pages/register_page.dart';
-import 'package:project_fab/config.dart';
+import 'package:project_fab/pages/people_page.dart';
+import 'package:project_fab/pages/profile_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  //todo: check if we have a token in our storage. If not: show login page.
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _pageController = PageController();
+  int _currentIndex = 0;
 
   @override
-  Widget build(BuildContext context) {
-    final samples = [
-      Sample(
-        'Login page',
-        'Inlogpagina',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const LoginPage(),
-        )),
-      ),
-      Sample(
-        'Feed page',
-        'Feed',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const FeedPage(),
-        )),
-      ),
-      Sample(
-        'Register page',
-        'Registreer page',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const RegisterPage(),
-        )),
-      ),
-      Sample(
-        'Forgot password page',
-        'Wachtwoord vergeten page',
-        Icons.home,
-        () => Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (c) => const ForgotPasswordPage(),
-        )),
-      ),
-    ];
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
+  //todo: check if we have a token in our storage. If not: show login page.
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          appName,
-        ),
+      body: PageView(
+        controller: _pageController,
+        children: const [
+          FeedPage(),
+          PeoplePage(),
+          ProfilePage(),
+        ],
       ),
-      body:
-          ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          _pageController.jumpToPage(value);
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        currentIndex: _currentIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'people',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'profile',
+          ),
+        ],
+      ),
     );
+
+    // final samples = [
+    //   Sample(
+    //     'Login page',
+    //     'Inlogpagina',
+    //     Icons.home,
+    //     () => Navigator.of(context).push<void>(MaterialPageRoute(
+    //       builder: (c) => const LoginPage(),
+    //     )),
+    //   ),
+    //   Sample(
+    //     'Feed page',
+    //     'Feed',
+    //     Icons.home,
+    //     () => Navigator.of(context).push<void>(MaterialPageRoute(
+    //       builder: (c) => const FeedPage(),
+    //     )),
+    //   ),
+    //   Sample(
+    //     'Register page',
+    //     'Registreer page',
+    //     Icons.home,
+    //     () => Navigator.of(context).push<void>(MaterialPageRoute(
+    //       builder: (c) => const RegisterPage(),
+    //     )),
+    //   ),
+    //   Sample(
+    //     'Forgot password page',
+    //     'Wachtwoord vergeten page',
+    //     Icons.home,
+    //     () => Navigator.of(context).push<void>(MaterialPageRoute(
+    //       builder: (c) => const ForgotPasswordPage(),
+    //     )),
+    //   ),
+    // ];
+
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text(
+    //       appName,
+    //     ),
+    //   ),
+    //   body:
+    //       ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
+    // );
   }
 }
 

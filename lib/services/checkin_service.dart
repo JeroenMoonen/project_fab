@@ -18,9 +18,7 @@ class CheckinService {
       cacheOptions: HttpClient.defaultCacheOptions.copyWith(
         maxStale: const Nullable(Duration(days: 1)),
       ),
-    ).get(
-      '${HttpClient.apiUrl}/checkins',
-    );
+    ).get('${HttpClient.apiUrl}/checkins');
 
     print(response.data.toString());
     return response.data.map<Checkin>((p) => Checkin.fromJson(p)).toList();

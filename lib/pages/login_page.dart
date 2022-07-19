@@ -4,7 +4,6 @@ import 'package:project_fab/pages/feed_page.dart';
 import 'package:project_fab/pages/forgot_password_page.dart';
 import 'package:project_fab/pages/register_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
-import 'package:project_fab/services/jwt_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
