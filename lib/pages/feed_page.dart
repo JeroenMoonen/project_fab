@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/add_checkin.dart';
+import 'package:project_fab/pages/login_page.dart';
 import 'package:project_fab/services/checkin_service.dart';
 
 class FeedPage extends StatefulWidget {
@@ -47,7 +50,23 @@ class _FeedPageState extends State<FeedPage> {
 Widget _createBody(BuildContext context) {
   return FutureBuilder(
     future: CheckinService.getCheckinsWithCaching(),
-    builder: (context, AsyncSnapshot<List<Checkin>> snapshot) {
+    builder: (context, AsyncSnapshot<List<Checkin>?> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      if (snapshot.hasError) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (BuildContext context) => const LoginPage(),
+            ),
+          );
+        });
+
+        return Center(child: Text(snapshot.error.toString()));
+      }
+
       if (snapshot.hasData) {
         return RefreshIndicator(
           // onRefresh:() async => setState(() {})
@@ -71,10 +90,10 @@ Widget _createBody(BuildContext context) {
           ),
         );
       }
-      if (snapshot.hasError) {
-        return Center(child: Text(snapshot.error.toString()));
-      }
-      return const Center(child: CircularProgressIndicator());
+      // Empty container.
+      return const Center(
+        child: Text('Nothing to show.'),
+      );
     },
   );
 }

@@ -23,13 +23,13 @@ class ErrorInterceptor extends Interceptor {
           } else {
             err.error = err.response!.data['message'];
           }
+
           if (err.response!.statusCode == 404 && err.response!.data is String) {
             err.error = '${err.response!.statusCode} Page not found.';
           }
           if (err.response!.statusCode == 500 && err.response!.data is String) {
             err.error = '${err.response!.statusCode} Internal server error.';
           }
-
           if (err.response!.statusCode == 401) {
             err.error = 'Unauthenticated';
           }
@@ -47,6 +47,7 @@ class ErrorInterceptor extends Interceptor {
             'Connection to API server failed due to internet connection';
         break;
     }
+    print(err);
     handler.next(err);
   }
 }
