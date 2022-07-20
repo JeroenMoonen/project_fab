@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/components/datepicker.dart';
 import 'package:project_fab/components/input.dart';
-import 'package:project_fab/pages/login_page.dart';
+import 'package:project_fab/pages/onboarding/login_page.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _RegisterPageState extends State<RegisterPage> {
   DateTime date = DateTime.now();
-  final TextEditingController _emailController = TextEditingController();
+  late final TextEditingController _emailController;
+  late final TextEditingController _dateOfBirthController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _passwordRepeatController;
+  bool isOldEnough = false;
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _dateOfBirthController = TextEditingController();
+    _passwordController = TextEditingController();
+    _passwordRepeatController = TextEditingController();
+
+    super.initState();
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
+    _dateOfBirthController.dispose();
+    _passwordController.dispose();
+    _passwordRepeatController.dispose();
 
     super.dispose();
   }
@@ -24,6 +42,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -52,7 +71,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const <Widget>[
                         Text(
-                          "Forgot password",
+                          "Registreren",
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -62,7 +81,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           height: 20,
                         ),
                         Text(
-                          "Fill in your email to reset your password",
+                          "Maak een account aan",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,
@@ -78,9 +97,40 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       child: Column(
                         children: [
                           makeInput(
-                            label: "Email",
+                            label: "E-mail",
                             controller: _emailController,
                           ),
+                          makeDatepicker(
+                            label: 'Date of birth',
+                            date: date,
+                            controller: _dateOfBirthController,
+                            context: context,
+                            onDateTimeChanged: (DateTime newDate) {
+                              _dateOfBirthController.text =
+                                  '${newDate.day}/${newDate.month}/${newDate.year}';
+
+                              setState(() => date = newDate);
+                            },
+                          ),
+                          makeInput(
+                              label: "Password",
+                              controller: _passwordController,
+                              obsureText: true),
+                          makeInput(
+                            label: "Confirm Pasword",
+                            controller: _passwordRepeatController,
+                            obsureText: true,
+                          ),
+                          // makeCheckbox(
+                          //   label: 'I\'m older than 18',
+                          //   value: isOldEnough,
+                          //   onChanged: (bool? value) {
+                          //     setState(() {
+                          //       // print(value);
+                          //       isOldEnough = value!;
+                          //     });
+                          //   },
+                          // ) //
                         ],
                       ),
                     ),
@@ -106,7 +156,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             borderRadius: BorderRadius.circular(40),
                           ),
                           child: const Text(
-                            "Send",
+                            "Sign Up",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,

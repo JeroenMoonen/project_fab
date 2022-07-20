@@ -7,7 +7,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.orange),
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
       navigatorObservers: const [
@@ -15,13 +17,5 @@ class MyApp extends StatelessWidget {
       ],
       // title: '',
     );
-    //   return MaterialApp(
-    //     title: 'Flutter Boilerplate',
-    //     theme: ThemeData(primarySwatch: Colors.blue),
-    //     home: const HomePage(),
-    //     navigatorObservers: [
-    //       FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)
-    //     ],
-    //   );
   }
 }

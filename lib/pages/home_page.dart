@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/discover/discover_page.dart';
 import 'package:project_fab/pages/feed_page.dart';
-import 'package:project_fab/pages/people_page.dart';
-import 'package:project_fab/pages/profile_page.dart';
+import 'package:project_fab/pages/people/people_page.dart';
+import 'package:project_fab/pages/profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,11 +41,15 @@ class _HomePageState extends State<HomePage> {
         },
         children: const [
           FeedPage(),
+          DiscoverPage(),
           PeoplePage(),
           ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 12,
+        // unselectedFontSize: 13,
         onTap: (index) {
           _pageController.jumpToPage(index);
           setState(() {
@@ -52,10 +57,14 @@ class _HomePageState extends State<HomePage> {
           });
         },
         currentIndex: _activePageIndex,
-        items: const [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'discover',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
