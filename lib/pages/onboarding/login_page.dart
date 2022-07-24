@@ -130,17 +130,26 @@ class _LoginPageState extends State<LoginPage> {
                       minWidth: double.infinity,
                       height: 60,
                       onPressed: () async {
-                        await AuthenticationService.authenticate(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
+                        try {
+                          await AuthenticationService.authenticate(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
 
-                        //TODO: only navigate to feed on success...
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => const FeedPage(),
-                          ),
-                        );
+                          //TODO: only navigate to feed on success...
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const FeedPage(),
+                            ),
+                          );
+                        } catch (e) {
+                          var snackBar = SnackBar(
+                            content: Text(e.toString()),
+                          );
+
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       },
                       color: Colors.orangeAccent,
                       shape: RoundedRectangleBorder(

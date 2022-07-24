@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:project_fab/config.dart';
@@ -80,6 +79,7 @@ Widget _createBody(BuildContext context) {
       }
 
       if (snapshot.hasError) {
+        //TODO: use enums instead of this.
         //probably unauthorized.. Got to loginpage.
         SchedulerBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).pushReplacement(
@@ -99,6 +99,7 @@ Widget _createBody(BuildContext context) {
       if (snapshot.hasData) {
         return RefreshIndicator(
           // onRefresh:() async => setState(() {})
+          // ignore: avoid_returning_null_for_void
           onRefresh: () async => null,
           child: ListView.separated(
             separatorBuilder: (context, idx) => const Divider(),

@@ -38,7 +38,7 @@ class DioException implements Exception {
       case 400:
         return 'Bad request.';
       case 401:
-        return 'Authentication failed.';
+        return 'Authentication failure: the given login credentials are incorrect.';
       case 403:
         return 'The authenticated user is not allowed to access the specified API endpoint.';
       case 404:

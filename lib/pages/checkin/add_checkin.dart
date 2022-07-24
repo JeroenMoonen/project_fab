@@ -32,7 +32,7 @@ class _AddCheckinState extends State<AddCheckin> {
         elevation: 0,
         backgroundColor: Colors.white,
       ),
-      body: Text('Add checkin here'),
+      body: const Text('Add checkin here'),
     );
   }
 }

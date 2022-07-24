@@ -47,7 +47,7 @@ class ErrorInterceptor extends Interceptor {
             'Connection to API server failed due to internet connection';
         break;
     }
-    print(err);
+
     handler.next(err);
   }
 }
