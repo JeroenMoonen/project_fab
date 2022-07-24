@@ -7,6 +7,10 @@ class JwtStorage {
     await storage.write(key: 'jwt', value: token);
   }
 
+  Future<void> removeJwt({token}) async {
+    await storage.delete(key: 'jwt');
+  }
+
   Future<String?> getJwt() async {
     return await storage.read(key: 'jwt');
   }

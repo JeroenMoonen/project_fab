@@ -29,6 +29,10 @@ class AuthenticationService {
       return Future.error(DioException.fromDioError(error));
     }
   }
+
+  static Future<void> logout() async {
+    await JwtStorage().removeJwt();
+  }
   // Send un-cached http request
   // static Future<List<User>> getUsers() async {
   //   var response =

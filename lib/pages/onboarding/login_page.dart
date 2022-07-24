@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
 import 'package:project_fab/pages/feed_page.dart';
+import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
 import 'package:project_fab/pages/onboarding/register_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
@@ -140,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const FeedPage(),
+                                  const HomePage(),
                             ),
                           );
                         } catch (e) {

@@ -4,6 +4,7 @@ import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
+import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/checkin_service.dart';
 
 class FeedPage extends StatefulWidget {
@@ -81,6 +82,8 @@ Widget _createBody(BuildContext context) {
       if (snapshot.hasError) {
         //TODO: use enums instead of this.
         //probably unauthorized.. Got to loginpage.
+        AuthenticationService.logout();
+
         SchedulerBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

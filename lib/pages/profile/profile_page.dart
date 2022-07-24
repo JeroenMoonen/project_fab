@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/onboarding/login_page.dart';
+import 'package:project_fab/services/authentication_service.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -10,9 +12,21 @@ class ProfilePage extends StatelessWidget {
         title: const Text('Profile'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.logout),
             onPressed: () {
-              print('Go to settings page');
+              AuthenticationService.logout();
+
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const LoginPage(),
+                ),
+              );
+
+              var snackBar = const SnackBar(
+                content: Text('Succesfully logged out.'),
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           ),
         ],
