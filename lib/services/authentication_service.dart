@@ -7,7 +7,44 @@ import '../models/models.dart';
 import '../utils/http/http_client.dart';
 
 class AuthenticationService {
-  static Future<AuthenticationToken> authenticate({email, password}) async {
+  static Future<bool> isLoggedIn() async {
+    return await JwtStorage().hasJwt();
+  }
+
+  static Future<bool> register({
+    required email,
+    required password,
+    required DateTime dateOfBirth,
+  }) async {
+    try {
+      var response = await HttpClient.create().post(
+        '${HttpClient.apiUrl}/users',
+        data: {
+          'email': email,
+          'password': password,
+          'dateOfBirth':
+              "${dateOfBirth.year}-${dateOfBirth.month}-${dateOfBirth.day}", //todo: fix this input
+        },
+      );
+
+      //TODO use enum for header check
+      if (response.statusCode != 201) {
+        return false;
+      }
+
+      return true;
+    } on DioError catch (error) {
+      if (kDebugMode) {
+        print("Error while register: ${error.message}.");
+      }
+      return Future.error(DioException.fromDioError(error));
+    }
+  }
+
+  static Future<AuthenticationToken> authenticate({
+    required email,
+    required password,
+  }) async {
     //todo: check if the user is already authenticated!
     // var JWT = await storage.read(key: 'jwt');
 
@@ -19,6 +56,7 @@ class AuthenticationService {
       });
 
       var data = AuthenticationToken.fromJson(response.data);
+
       await JwtStorage().saveJwt(token: data.token);
 
       return data;

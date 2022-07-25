@@ -65,6 +65,7 @@ class _FeedPageState extends State<FeedPage> {
         tooltip: 'Add Activity',
         child: const Icon(
           Icons.add,
+          color: Colors.white,
         ),
       ),
     );
@@ -77,29 +78,31 @@ Widget _createBody(BuildContext context) {
     builder: (context, AsyncSnapshot<List<Checkin>?> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(child: CircularProgressIndicator());
-      }
+      } else if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasError) {
+          print('error');
+          //TODO: use enums instead of this.
+          //probably unauthorized.. Got to loginpage.
 
-      if (snapshot.hasError) {
-        //TODO: use enums instead of this.
-        //probably unauthorized.. Got to loginpage.
-        AuthenticationService.logout();
+          AuthenticationService.logout();
 
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (BuildContext context) => const LoginPage(),
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) => const LoginPage(),
+              ),
+            );
+          });
+
+          return Center(
+            child: Text(
+              snapshot.error.toString(),
             ),
           );
-        });
-
-        return Center(
-          child: Text(
-            snapshot.error.toString(),
-          ),
-        );
+        }
       }
 
-      if (snapshot.hasData) {
+      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
         return RefreshIndicator(
           // onRefresh:() async => setState(() {})
           // ignore: avoid_returning_null_for_void
@@ -114,152 +117,150 @@ Widget _createBody(BuildContext context) {
           ),
         );
       }
+
       // Empty container.
       return const Center(
-        child: Text('Nothing to show.'),
+        child: Text('First add some friends to see what they\'re drinking.'),
       );
     },
   );
 }
 
 Widget _buildItem({item, context}) {
-  return Container(
-    // margin: const EdgeInsets.only(bottom: 10),
-    child: Column(
-      children: [
-        Container(
-          // color: Colors.yellow,
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                '${item.user.firstName} ${item.user.lastName}',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                ),
+  return Column(
+    children: [
+      Container(
+        // color: Colors.yellow,
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              '${item.user.firstName} ${item.user.lastName}',
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
               ),
-              const Text(
-                '[location name]',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                item.whisky.name,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          color: Colors.yellow,
-          height: 210,
-          width: MediaQuery.of(context).size.width,
-          child: const Center(
-            child: Text(
-              "Image here",
-              textAlign: TextAlign.center,
             ),
-          ),
-          //Image.asset('assets/pic${imgUrl[index + 4]}', fit: BoxFit.cover)
-        ),
-        const SizedBox(height: 5),
-        Container(
-          height: 30,
-          // color: Colors.yellow,
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const <Widget>[
-              Icon(
-                Icons.comment_outlined,
-                // size: 22,
+            const Text(
+              '[location name]',
+              style: TextStyle(
+                fontSize: 14,
                 color: Colors.black,
+                fontWeight: FontWeight.w400,
               ),
-              Icon(
-                Icons.favorite_outline,
-                // size: 22,
+            ),
+          ],
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              item.whisky.name,
+              style: const TextStyle(
+                fontSize: 14,
                 color: Colors.black,
+                fontWeight: FontWeight.w400,
               ),
-              // const SizedBox(
-              //   width: 50,
-              //   child: Icon(
-              //     Icons.bookmark,
-              //     size: 22,
-              //     color: Colors.black,
-              //   ),
-              // )
-            ],
+            ),
+          ],
+        ),
+      ),
+      Container(
+        color: Colors.cyan,
+        height: 210,
+        width: MediaQuery.of(context).size.width,
+        child: const Center(
+          child: Text(
+            "Image here",
+            textAlign: TextAlign.center,
           ),
         ),
-        const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                '198,459 likes',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+        //Image.asset('assets/pic${imgUrl[index + 4]}', fit: BoxFit.cover)
+      ),
+      const SizedBox(height: 5),
+      Container(
+        height: 30,
+        // color: Colors.yellow,
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const <Widget>[
+            Icon(
+              Icons.comment_outlined,
+              // size: 22,
+              color: Colors.black,
+            ),
+            Icon(
+              Icons.favorite_outline,
+              // size: 22,
+              color: Colors.black,
+            ),
+            // const SizedBox(
+            //   width: 50,
+            //   child: Icon(
+            //     Icons.bookmark,
+            //     size: 22,
+            //     color: Colors.black,
+            //   ),
+            // )
+          ],
+        ),
+      ),
+      const Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(
+              '198,459 likes',
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
               ),
-            )),
-        const SizedBox(height: 3),
-        Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                children: const [
-                  Text('hello',
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800)),
-                  SizedBox(width: 8),
-                  Text(
-                    'hello2',
+            ),
+          )),
+      const SizedBox(height: 3),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: const [
+                Text('hello',
                     style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-            )),
-        const SizedBox(height: 5),
-        const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                'View all 5980 comments',
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              ),
-            ))
-      ],
-    ),
+                        fontSize: 13,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800)),
+                SizedBox(width: 8),
+                Text(
+                  'hello2',
+                  style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white),
+                ),
+              ],
+            ),
+          )),
+      const SizedBox(height: 5),
+      const Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(
+              'View all 5980 comments',
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
+          ))
+    ],
   );
 
   // return ListTile(

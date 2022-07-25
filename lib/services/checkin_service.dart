@@ -14,7 +14,9 @@ class CheckinService {
 
     var response = await HttpClient.create().get(url);
 
-    return response.data.map<Checkin>((p) => Checkin.fromJson(p)).toList();
+    return response.data
+        .map<Checkin>((checkin) => Checkin.fromJson(checkin))
+        .toList();
   }
 
   // This method implements an HTTP request with caching
@@ -26,7 +28,9 @@ class CheckinService {
         ),
       ).get('${HttpClient.apiUrl}/checkins');
 
-      return response.data.map<Checkin>((p) => Checkin.fromJson(p)).toList();
+      return response.data
+          .map<Checkin>((checkins) => Checkin.fromJson(checkins))
+          .toList();
     } on DioError catch (error) {
       if (kDebugMode) {
         print("Error while getCheckinsWithCaching: ${error.message}.");

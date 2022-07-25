@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/datepicker.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
+import 'package:project_fab/services/authentication_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -150,7 +152,28 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
-                          onPressed: () {},
+                          onPressed: () async {
+                            bool isRegistered =
+                                await AuthenticationService.register(
+                              email: _emailController.text,
+                              dateOfBirth: date,
+                              password: _passwordController.text,
+                            );
+
+                            if (isRegistered) {
+                              await AuthenticationService.authenticate(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const HomePage(),
+                                ),
+                              );
+                            }
+                          },
                           color: Colors.orangeAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40),

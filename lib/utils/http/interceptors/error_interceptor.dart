@@ -27,6 +27,9 @@ class ErrorInterceptor extends Interceptor {
           if (err.response!.statusCode == 404 && err.response!.data is String) {
             err.error = '${err.response!.statusCode} Page not found.';
           }
+          if (err.response!.statusCode == 422 && err.response!.data is String) {
+            err.error = '${err.response!.statusCode} Could not create.';
+          }
           if (err.response!.statusCode == 500 && err.response!.data is String) {
             err.error = '${err.response!.statusCode} Internal server error.';
           }

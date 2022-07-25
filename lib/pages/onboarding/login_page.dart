@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
-import 'package:project_fab/pages/feed_page.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
 import 'package:project_fab/pages/onboarding/register_page.dart';
@@ -31,6 +30,27 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
 
     super.dispose();
+  }
+
+  Future onLoginPressed({required context}) async {
+    try {
+      await AuthenticationService.authenticate(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const HomePage(),
+        ),
+      );
+    } catch (e) {
+      var snackBar = SnackBar(
+        content: Text(e.toString()),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   @override
@@ -130,27 +150,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: MaterialButton(
                       minWidth: double.infinity,
                       height: 60,
-                      onPressed: () async {
-                        try {
-                          await AuthenticationService.authenticate(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-
-                          //TODO: only navigate to feed on success...
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const HomePage(),
-                            ),
-                          );
-                        } catch (e) {
-                          var snackBar = SnackBar(
-                            content: Text(e.toString()),
-                          );
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
+                      onPressed: () {
+                        onLoginPressed(context: context);
                       },
                       color: Colors.orangeAccent,
                       shape: RoundedRectangleBorder(
