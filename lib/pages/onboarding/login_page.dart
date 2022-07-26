@@ -36,7 +36,11 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text,
       );
 
-      Navigator.pushReplacementNamed(context, '/feed');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/feed',
+        (_) => false,
+      );
     } catch (e) {
       var snackBar = SnackBar(
         content: Text(e.toString()),
