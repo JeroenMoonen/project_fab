@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
 import 'package:project_fab/services/authentication_service.dart';
+import 'package:project_fab/services/user_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -31,10 +32,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future onLoginPressed({required context}) async {
     try {
-      await AuthenticationService.authenticate(
+      final auth = await AuthenticationService.authenticate(
         email: _emailController.text,
         password: _passwordController.text,
       );
+
+      final user = await UserService.getUser(id: auth.userId);
+
+      print(user);
 
       Navigator.pushNamedAndRemoveUntil(
         context,

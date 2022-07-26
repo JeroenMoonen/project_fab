@@ -20,7 +20,8 @@ AuthenticationToken _$AuthenticationTokenFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AuthenticationToken {
-  String? get token => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $AuthenticationTokenCopyWith<$Res> {
   factory $AuthenticationTokenCopyWith(
           AuthenticationToken value, $Res Function(AuthenticationToken) then) =
       _$AuthenticationTokenCopyWithImpl<$Res>;
-  $Res call({String? token});
+  $Res call({int userId, String token});
 }
 
 /// @nodoc
@@ -47,13 +48,18 @@ class _$AuthenticationTokenCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? userId = freezed,
     Object? token = freezed,
   }) {
     return _then(_value.copyWith(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -65,7 +71,7 @@ abstract class _$$_AuthenticationTokenCopyWith<$Res>
           $Res Function(_$_AuthenticationToken) then) =
       __$$_AuthenticationTokenCopyWithImpl<$Res>;
   @override
-  $Res call({String? token});
+  $Res call({int userId, String token});
 }
 
 /// @nodoc
@@ -81,13 +87,18 @@ class __$$_AuthenticationTokenCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? userId = freezed,
     Object? token = freezed,
   }) {
     return _then(_$_AuthenticationToken(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -95,17 +106,19 @@ class __$$_AuthenticationTokenCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AuthenticationToken implements _AuthenticationToken {
-  _$_AuthenticationToken({this.token});
+  _$_AuthenticationToken({required this.userId, required this.token});
 
   factory _$_AuthenticationToken.fromJson(Map<String, dynamic> json) =>
       _$$_AuthenticationTokenFromJson(json);
 
   @override
-  final String? token;
+  final int userId;
+  @override
+  final String token;
 
   @override
   String toString() {
-    return 'AuthenticationToken(token: $token)';
+    return 'AuthenticationToken(userId: $userId, token: $token)';
   }
 
   @override
@@ -113,13 +126,16 @@ class _$_AuthenticationToken implements _AuthenticationToken {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthenticationToken &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.token, token));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(token));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(token));
 
   @JsonKey(ignore: true)
   @override
@@ -136,13 +152,17 @@ class _$_AuthenticationToken implements _AuthenticationToken {
 }
 
 abstract class _AuthenticationToken implements AuthenticationToken {
-  factory _AuthenticationToken({final String? token}) = _$_AuthenticationToken;
+  factory _AuthenticationToken(
+      {required final int userId,
+      required final String token}) = _$_AuthenticationToken;
 
   factory _AuthenticationToken.fromJson(Map<String, dynamic> json) =
       _$_AuthenticationToken.fromJson;
 
   @override
-  String? get token;
+  int get userId;
+  @override
+  String get token;
   @override
   @JsonKey(ignore: true)
   _$$_AuthenticationTokenCopyWith<_$_AuthenticationToken> get copyWith =>
