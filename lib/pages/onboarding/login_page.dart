@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
 import 'package:project_fab/pages/onboarding/register_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.pushNamedAndRemoveUntil(
         context,
-        '/feed',
+        HomePage.routeName,
         (_) => false,
       );
     } catch (e) {
