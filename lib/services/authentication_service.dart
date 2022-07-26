@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project_fab/exceptions/dio_exception.dart';
 import 'package:project_fab/services/jwt_storage.dart';

@@ -39,11 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text,
       );
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => const HomePage(),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/feed');
     } catch (e) {
       var snackBar = SnackBar(
         content: Text(e.toString()),
@@ -61,15 +57,6 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.black,
-            )),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -175,11 +162,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const RegisterPage(),
-                          ),
+                        Navigator.pushNamed(
+                          context,
+                          '/register',
                         );
                       },
                       child: const Text(
@@ -197,11 +182,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const ForgotPasswordPage(),
-                          ),
+                        Navigator.pushNamed(
+                          context,
+                          '/forgot-password',
                         );
                       },
                       child: const Text(

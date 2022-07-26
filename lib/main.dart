@@ -10,10 +10,10 @@ void main() async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       // await Firebase.initializeApp();
-      if (kDebugMode) {
-        // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-        // await FirebasePerformance.instance.setPerformanceCollectionEnabled(false);
-      }
+      // if (kDebugMode) {
+      // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+      // await FirebasePerformance.instance.setPerformanceCollectionEnabled(false);
+      // }
       await dotenv.load(
         fileName: kDebugMode ? 'environments/dev.env' : 'environments/.env',
       );
@@ -23,7 +23,6 @@ void main() async {
         Zone.current.handleUncaughtError(error.exception, error.stack!);
         return ErrorWidget(error.exception);
       };
-
       runApp(const MyApp());
     },
     (exception, stackTrace) {

@@ -166,11 +166,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 password: _passwordController.text,
                               );
 
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const HomePage(),
-                                ),
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/feed',
+                                (_) => false,
                               );
                             }
                           },
@@ -196,11 +195,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: <Widget>[
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const LoginPage(),
-                              ),
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/login',
+                              (_) => false,
                             );
                           },
                           child: const Text(

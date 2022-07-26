@@ -78,20 +78,11 @@ Widget _createBody(BuildContext context) {
     builder: (context, AsyncSnapshot<List<Checkin>?> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(child: CircularProgressIndicator());
-      } else if (snapshot.connectionState == ConnectionState.done) {
+      }
+      if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.hasError) {
-          print('error');
-          //TODO: use enums instead of this.
-          //probably unauthorized.. Got to loginpage.
-
-          AuthenticationService.logout();
-
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (BuildContext context) => const LoginPage(),
-              ),
-            );
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.popAndPushNamed(context, '/login');
           });
 
           return Center(
@@ -105,7 +96,6 @@ Widget _createBody(BuildContext context) {
       if (snapshot.hasData && snapshot.data!.isNotEmpty) {
         return RefreshIndicator(
           // onRefresh:() async => setState(() {})
-          // ignore: avoid_returning_null_for_void
           onRefresh: () async => null,
           child: ListView.separated(
             separatorBuilder: (context, idx) => const Divider(),
@@ -255,9 +245,10 @@ Widget _buildItem({item, context}) {
             child: Text(
               'View all 5980 comments',
               style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
             ),
           ))
     ],
