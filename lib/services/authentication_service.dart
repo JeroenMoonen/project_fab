@@ -43,6 +43,7 @@ class AuthenticationService {
   static Future<AuthenticationToken> authenticate({
     required email,
     required password,
+    saveUserData = false,
   }) async {
     //todo: check if the user is already authenticated!
     // var JWT = await storage.read(key: 'jwt');
