@@ -14,6 +14,8 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       dateOfBirth: json['dateOfBirth'] as String?,
       about: json['about'] as String?,
       location: json['location'] as String?,
+      checkinCount: json['checkinCount'] as int? ?? 0,
+      friendsCount: json['friendsCount'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
@@ -24,4 +26,6 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'dateOfBirth': instance.dateOfBirth,
       'about': instance.about,
       'location': instance.location,
+      'checkinCount': instance.checkinCount,
+      'friendsCount': instance.friendsCount,
     };

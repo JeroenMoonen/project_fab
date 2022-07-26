@@ -23,10 +23,12 @@ mixin _$User {
   int get id => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError; //String? gender,
+  String get email => throw _privateConstructorUsedError; // String? gender,
   String? get dateOfBirth => throw _privateConstructorUsedError;
   String? get about => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  int get checkinCount => throw _privateConstructorUsedError;
+  int get friendsCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +46,9 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String? dateOfBirth,
       String? about,
-      String? location});
+      String? location,
+      int checkinCount,
+      int friendsCount});
 }
 
 /// @nodoc
@@ -64,6 +68,8 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? dateOfBirth = freezed,
     Object? about = freezed,
     Object? location = freezed,
+    Object? checkinCount = freezed,
+    Object? friendsCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -94,6 +100,14 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      checkinCount: checkinCount == freezed
+          ? _value.checkinCount
+          : checkinCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      friendsCount: friendsCount == freezed
+          ? _value.friendsCount
+          : friendsCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -110,7 +124,9 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String? dateOfBirth,
       String? about,
-      String? location});
+      String? location,
+      int checkinCount,
+      int friendsCount});
 }
 
 /// @nodoc
@@ -131,6 +147,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? dateOfBirth = freezed,
     Object? about = freezed,
     Object? location = freezed,
+    Object? checkinCount = freezed,
+    Object? friendsCount = freezed,
   }) {
     return _then(_$_User(
       id: id == freezed
@@ -161,6 +179,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      checkinCount: checkinCount == freezed
+          ? _value.checkinCount
+          : checkinCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      friendsCount: friendsCount == freezed
+          ? _value.friendsCount
+          : friendsCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -175,7 +201,9 @@ class _$_User implements _User {
       required this.email,
       this.dateOfBirth,
       this.about,
-      this.location});
+      this.location,
+      this.checkinCount = 0,
+      this.friendsCount = 0});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -187,17 +215,23 @@ class _$_User implements _User {
   final String? lastName;
   @override
   final String email;
-//String? gender,
+// String? gender,
   @override
   final String? dateOfBirth;
   @override
   final String? about;
   @override
   final String? location;
+  @override
+  @JsonKey()
+  final int checkinCount;
+  @override
+  @JsonKey()
+  final int friendsCount;
 
   @override
   String toString() {
-    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, dateOfBirth: $dateOfBirth, about: $about, location: $location)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, dateOfBirth: $dateOfBirth, about: $about, location: $location, checkinCount: $checkinCount, friendsCount: $friendsCount)';
   }
 
   @override
@@ -212,7 +246,11 @@ class _$_User implements _User {
             const DeepCollectionEquality()
                 .equals(other.dateOfBirth, dateOfBirth) &&
             const DeepCollectionEquality().equals(other.about, about) &&
-            const DeepCollectionEquality().equals(other.location, location));
+            const DeepCollectionEquality().equals(other.location, location) &&
+            const DeepCollectionEquality()
+                .equals(other.checkinCount, checkinCount) &&
+            const DeepCollectionEquality()
+                .equals(other.friendsCount, friendsCount));
   }
 
   @JsonKey(ignore: true)
@@ -225,7 +263,9 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(dateOfBirth),
       const DeepCollectionEquality().hash(about),
-      const DeepCollectionEquality().hash(location));
+      const DeepCollectionEquality().hash(location),
+      const DeepCollectionEquality().hash(checkinCount),
+      const DeepCollectionEquality().hash(friendsCount));
 
   @JsonKey(ignore: true)
   @override
@@ -248,7 +288,9 @@ abstract class _User implements User {
       required final String email,
       final String? dateOfBirth,
       final String? about,
-      final String? location}) = _$_User;
+      final String? location,
+      final int checkinCount,
+      final int friendsCount}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -260,12 +302,16 @@ abstract class _User implements User {
   String? get lastName;
   @override
   String get email;
-  @override //String? gender,
+  @override // String? gender,
   String? get dateOfBirth;
   @override
   String? get about;
   @override
   String? get location;
+  @override
+  int get checkinCount;
+  @override
+  int get friendsCount;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

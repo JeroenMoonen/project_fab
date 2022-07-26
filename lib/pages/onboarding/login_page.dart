@@ -37,9 +37,10 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text,
       );
 
-      final user = await UserService.getUser(id: auth.userId);
-
-      print(user);
+      await UserService.getUser(
+        id: auth.userId,
+        saveToLocal: true,
+      );
 
       Navigator.pushNamedAndRemoveUntil(
         context,
