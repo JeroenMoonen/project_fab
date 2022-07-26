@@ -60,161 +60,157 @@ class _RegisterPageState extends State<RegisterPage> {
             )),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const <Widget>[
-                        Text(
-                          "Registreren",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const <Widget>[
+                      Text(
+                        "Registreren",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(
-                          height: 20,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Maak een account aan",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
                         ),
-                        Text(
-                          "Maak een account aan",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                          ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      children: [
+                        makeInput(
+                          label: "E-mail",
+                          controller: _emailController,
                         ),
-                        SizedBox(
-                          height: 30,
-                        )
+                        makeDatepicker(
+                          label: 'Date of birth',
+                          date: date,
+                          controller: _dateOfBirthController,
+                          context: context,
+                          onDateTimeChanged: (DateTime newDate) {
+                            _dateOfBirthController.text =
+                                '${newDate.day}/${newDate.month}/${newDate.year}';
+
+                            setState(() => date = newDate);
+                          },
+                        ),
+                        makeInput(
+                            label: "Password",
+                            controller: _passwordController,
+                            obsureText: true),
+                        makeInput(
+                          label: "Confirm Pasword",
+                          controller: _passwordRepeatController,
+                          obsureText: true,
+                        ),
+                        // makeCheckbox(
+                        //   label: 'I\'m older than 18',
+                        //   value: isOldEnough,
+                        //   onChanged: (bool? value) {
+                        //     setState(() {
+                        //       // print(value);
+                        //       isOldEnough = value!;
+                        //     });
+                        //   },
+                        // ) //
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        children: [
-                          makeInput(
-                            label: "E-mail",
-                            controller: _emailController,
-                          ),
-                          makeDatepicker(
-                            label: 'Date of birth',
-                            date: date,
-                            controller: _dateOfBirthController,
-                            context: context,
-                            onDateTimeChanged: (DateTime newDate) {
-                              _dateOfBirthController.text =
-                                  '${newDate.day}/${newDate.month}/${newDate.year}';
-
-                              setState(() => date = newDate);
-                            },
-                          ),
-                          makeInput(
-                              label: "Password",
-                              controller: _passwordController,
-                              obsureText: true),
-                          makeInput(
-                            label: "Confirm Pasword",
-                            controller: _passwordRepeatController,
-                            obsureText: true,
-                          ),
-                          // makeCheckbox(
-                          //   label: 'I\'m older than 18',
-                          //   value: isOldEnough,
-                          //   onChanged: (bool? value) {
-                          //     setState(() {
-                          //       // print(value);
-                          //       isOldEnough = value!;
-                          //     });
-                          //   },
-                          // ) //
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 3, left: 3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
-                          border: const Border(
-                            bottom: BorderSide(color: Colors.black),
-                            top: BorderSide(color: Colors.black),
-                            right: BorderSide(color: Colors.black),
-                            left: BorderSide(color: Colors.black),
-                          ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 3, left: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        border: const Border(
+                          bottom: BorderSide(color: Colors.black),
+                          top: BorderSide(color: Colors.black),
+                          right: BorderSide(color: Colors.black),
+                          left: BorderSide(color: Colors.black),
                         ),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          height: 60,
-                          onPressed: () async {
-                            bool isRegistered =
-                                await AuthenticationService.register(
+                      ),
+                      child: MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () async {
+                          bool isRegistered =
+                              await AuthenticationService.register(
+                            email: _emailController.text,
+                            dateOfBirth: date,
+                            password: _passwordController.text,
+                          );
+
+                          if (isRegistered) {
+                            await AuthenticationService.authenticate(
                               email: _emailController.text,
-                              dateOfBirth: date,
                               password: _passwordController.text,
                             );
 
-                            if (isRegistered) {
-                              await AuthenticationService.authenticate(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              );
-
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                '/feed',
-                                (_) => false,
-                              );
-                            }
-                          },
-                          color: Colors.orangeAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Navigator.popAndPushNamed(context, '/feed');
+                            });
+                          }
+                        },
+                        color: Colors.orangeAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              '/login',
-                              (_) => false,
-                            );
-                          },
-                          child: const Text(
-                            "Already have an account?",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
-                            ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/login',
+                            (_) => false,
+                          );
+                        },
+                        child: const Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

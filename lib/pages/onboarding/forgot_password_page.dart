@@ -123,11 +123,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       children: <Widget>[
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const LoginPage(),
-                              ),
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/login',
+                              (_) => false,
                             );
                           },
                           child: const Text(

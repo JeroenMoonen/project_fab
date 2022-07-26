@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
-import 'package:project_fab/pages/home_page.dart';
-import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
-import 'package:project_fab/pages/onboarding/register_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -59,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
       ),
       body: SizedBox(
-        height: MediaQuery.of(context).size.height,
+        // height: MediaQuery.of(context).size.height,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
