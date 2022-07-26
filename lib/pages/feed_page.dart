@@ -1,10 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
-import 'package:project_fab/pages/onboarding/login_page.dart';
-import 'package:project_fab/services/authentication_service.dart';
+import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/services/checkin_service.dart';
 
 class FeedPage extends StatefulWidget {
@@ -77,7 +78,9 @@ Widget _createBody(BuildContext context) {
     future: CheckinService.getCheckinsWithCaching(),
     builder: (context, AsyncSnapshot<List<Checkin>?> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       }
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.hasError) {
@@ -102,7 +105,8 @@ Widget _createBody(BuildContext context) {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var item = snapshot.data![index];
-              return _buildItem(item: item, context: context);
+
+              return Card(item, index);
             },
           ),
         );
@@ -116,151 +120,214 @@ Widget _createBody(BuildContext context) {
   );
 }
 
-Widget _buildItem({item, context}) {
-  return Column(
-    children: [
-      Container(
-        // color: Colors.yellow,
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+class Card extends StatelessWidget {
+  final Checkin item;
+  final int index;
+
+  const Card(this.item, this.index);
+  // final String imagePath, cityName, monthYear, discount, oldPrice, newPrice;
+  // CityCard(this.imagePath, this.cityName, this.monthYear, this.discount,
+  //     this.oldPrice, this.newPrice);
+  @override
+  Widget build(BuildContext context) {
+    final imageUrls = [
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
+      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
+    ];
+
+    return Column(
+      children: [
+        Row(
           children: <Widget>[
-            Text(
-              '${item.user.firstName} ${item.user.lastName}',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: CircleAvatar(
+                child: Text(
+                  'me',
+                ),
               ),
             ),
-            const Text(
-              '[location name]',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-      ),
-      Container(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              item.whisky.name,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-      ),
-      Container(
-        color: Colors.cyan,
-        height: 210,
-        width: MediaQuery.of(context).size.width,
-        child: const Center(
-          child: Text(
-            "Image here",
-            textAlign: TextAlign.center,
-          ),
-        ),
-        //Image.asset('assets/pic${imgUrl[index + 4]}', fit: BoxFit.cover)
-      ),
-      const SizedBox(height: 5),
-      Container(
-        height: 30,
-        // color: Colors.yellow,
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const <Widget>[
-            Icon(
-              Icons.comment_outlined,
-              // size: 22,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.favorite_outline,
-              // size: 22,
-              color: Colors.black,
-            ),
-            // const SizedBox(
-            //   width: 50,
-            //   child: Icon(
-            //     Icons.bookmark,
-            //     size: 22,
-            //     color: Colors.black,
-            //   ),
-            // )
-          ],
-        ),
-      ),
-      const Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(
-              '198,459 likes',
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          )),
-      const SizedBox(height: 3),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              children: const [
-                Text('hello',
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800)),
-                SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('${item.user.firstName} ${item.user.lastName}'),
                 Text(
-                  'hello2',
-                  style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white),
+                  'Posted at ${DateFormat('yyyy-MM-dd - kk:mm').format(item.postedAt)}',
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
-          )),
-      const SizedBox(height: 5),
-      const Align(
-          alignment: Alignment.centerLeft,
+          ],
+        ),
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(
+            context,
+            CheckinDetailPage.routeName,
+            arguments: item,
+          ),
           child: Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(
-              'View all 5980 comments',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 300,
+                    child: Image.network(
+                      imageUrls[index],
+                      fit: BoxFit.cover,
+                    ),
+                    // child: Text('hello'),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    width: MediaQuery.of(context).size.width / 3,
+                    height: 35,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Colors.black,
+                            Colors.black12,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const <Widget>[
+                            Text(
+                              '4/5 star rating',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    bottom: 0,
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 60,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Colors.black,
+                            Colors.black12,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 10,
+                    bottom: 10,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              item.whisky.name,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 1),
+                            ),
+                            const Text(
+                              'Distillery name here',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ))
-    ],
-  );
-
-  // return ListTile(
-  //   leading: CircleAvatar(
-  //     child: Text(
-  //       item.id.toString(),
-  //     ),
-  //   ),
-  //   title: Text(item.whisky.name),
-  //   subtitle: Text(item.whisky.bottler?.name ?? ''),
-  // );
+          ),
+        ),
+      ],
+    );
+  }
 }

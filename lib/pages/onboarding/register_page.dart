@@ -6,6 +6,7 @@ import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
 
 class RegisterPage extends StatefulWidget {
+  static const routeName = '/register';
   const RegisterPage({Key? key}) : super(key: key);
 
   @override
@@ -166,7 +167,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
 
                             WidgetsBinding.instance.addPostFrameCallback((_) {
-                              Navigator.popAndPushNamed(context, '/feed');
+                              Navigator.popAndPushNamed(
+                                context,
+                                HomePage.routeName,
+                              );
                             });
                           }
                         },
@@ -194,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            '/login',
+                            LoginPage.routeName,
                             (_) => false,
                           );
                         },

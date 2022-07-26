@@ -5,6 +5,7 @@ import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
+  static const routeName = '/profile';
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
@@ -38,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               Navigator.pushNamedAndRemoveUntil(
                 context,
-                '/login',
+                LoginPage.routeName,
                 (_) => false,
               );
 
@@ -116,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: EdgeInsets.all(4),
                   ),
                   const Text(
-                    "Whisky kenner",
+                    "Whisky expert",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w400,
@@ -134,7 +135,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Column(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.only(top: 15, bottom: 5),
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 5),
                                 child: const Text(
                                   "Check-ins",
                                   style: TextStyle(
@@ -143,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(bottom: 15),
+                                padding: const EdgeInsets.only(bottom: 15),
                                 child: Text(
                                   '${data.checkinCount}',
                                   style: const TextStyle(

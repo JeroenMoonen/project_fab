@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
+import 'package:project_fab/pages/onboarding/register_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/user_service.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/login';
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -171,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          '/register',
+                          RegisterPage.routeName,
                         );
                       },
                       child: const Text(
@@ -191,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          '/forgot-password',
+                          ForgotPasswordPage.routeName,
                         );
                       },
                       child: const Text(

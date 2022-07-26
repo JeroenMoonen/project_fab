@@ -18,6 +18,7 @@ class Checkin with _$Checkin {
     double? tasteRating,
     String? finishReview,
     double? finishRating,
+    required DateTime postedAt,
   }) = _Checkin;
 
   factory Checkin.fromJson(Map<String, dynamic> json) =>

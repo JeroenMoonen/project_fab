@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PeoplePage extends StatelessWidget {
+  static const routeName = '/people';
   const PeoplePage({Key? key}) : super(key: key);
 
   @override

@@ -18,6 +18,7 @@ _$_Checkin _$$_CheckinFromJson(Map<String, dynamic> json) => _$_Checkin(
       tasteRating: (json['tasteRating'] as num?)?.toDouble(),
       finishReview: json['finishReview'] as String?,
       finishRating: (json['finishRating'] as num?)?.toDouble(),
+      postedAt: DateTime.parse(json['postedAt'] as String),
     );
 
 Map<String, dynamic> _$$_CheckinToJson(_$_Checkin instance) =>
@@ -33,4 +34,5 @@ Map<String, dynamic> _$$_CheckinToJson(_$_Checkin instance) =>
       'tasteRating': instance.tasteRating,
       'finishReview': instance.finishReview,
       'finishRating': instance.finishRating,
+      'postedAt': instance.postedAt.toIso8601String(),
     };

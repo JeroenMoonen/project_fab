@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/discover/discover_page.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
@@ -16,15 +17,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      initialRoute: '/feed',
+      initialRoute: HomePage.routeName,
       routes: {
-        '/feed': (context) => const HomePage(),
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/forgot-password': (context) => const ForgotPasswordPage(),
-        '/me': (context) => const ProfilePage(),
-        '/people': (context) => const PeoplePage(),
-        '/discover': (context) => const DiscoverPage(),
+        HomePage.routeName: (context) => const HomePage(),
+        LoginPage.routeName: (context) => const LoginPage(),
+        RegisterPage.routeName: (context) => const RegisterPage(),
+        ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
+        ProfilePage.routeName: (context) => const ProfilePage(),
+        PeoplePage.routeName: (context) => const PeoplePage(),
+        DiscoverPage.routeName: (context) => const DiscoverPage(),
+        CheckinDetailPage.routeName: (context) => const CheckinDetailPage(),
       },
       debugShowCheckedModeBanner: false,
       navigatorObservers: const [

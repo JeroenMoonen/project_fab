@@ -31,6 +31,7 @@ mixin _$Checkin {
   double? get tasteRating => throw _privateConstructorUsedError;
   String? get finishReview => throw _privateConstructorUsedError;
   double? get finishRating => throw _privateConstructorUsedError;
+  DateTime get postedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +53,8 @@ abstract class $CheckinCopyWith<$Res> {
       String? tasteReview,
       double? tasteRating,
       String? finishReview,
-      double? finishRating});
+      double? finishRating,
+      DateTime postedAt});
 
   $WhiskyCopyWith<$Res> get whisky;
   $UserCopyWith<$Res> get user;
@@ -79,6 +81,7 @@ class _$CheckinCopyWithImpl<$Res> implements $CheckinCopyWith<$Res> {
     Object? tasteRating = freezed,
     Object? finishReview = freezed,
     Object? finishRating = freezed,
+    Object? postedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -125,6 +128,10 @@ class _$CheckinCopyWithImpl<$Res> implements $CheckinCopyWith<$Res> {
           ? _value.finishRating
           : finishRating // ignore: cast_nullable_to_non_nullable
               as double?,
+      postedAt: postedAt == freezed
+          ? _value.postedAt
+          : postedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 
@@ -160,7 +167,8 @@ abstract class _$$_CheckinCopyWith<$Res> implements $CheckinCopyWith<$Res> {
       String? tasteReview,
       double? tasteRating,
       String? finishReview,
-      double? finishRating});
+      double? finishRating,
+      DateTime postedAt});
 
   @override
   $WhiskyCopyWith<$Res> get whisky;
@@ -190,6 +198,7 @@ class __$$_CheckinCopyWithImpl<$Res> extends _$CheckinCopyWithImpl<$Res>
     Object? tasteRating = freezed,
     Object? finishReview = freezed,
     Object? finishRating = freezed,
+    Object? postedAt = freezed,
   }) {
     return _then(_$_Checkin(
       id: id == freezed
@@ -236,6 +245,10 @@ class __$$_CheckinCopyWithImpl<$Res> extends _$CheckinCopyWithImpl<$Res>
           ? _value.finishRating
           : finishRating // ignore: cast_nullable_to_non_nullable
               as double?,
+      postedAt: postedAt == freezed
+          ? _value.postedAt
+          : postedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -254,7 +267,8 @@ class _$_Checkin implements _Checkin {
       this.tasteReview,
       this.tasteRating,
       this.finishReview,
-      this.finishRating});
+      this.finishRating,
+      required this.postedAt});
 
   factory _$_Checkin.fromJson(Map<String, dynamic> json) =>
       _$$_CheckinFromJson(json);
@@ -281,10 +295,12 @@ class _$_Checkin implements _Checkin {
   final String? finishReview;
   @override
   final double? finishRating;
+  @override
+  final DateTime postedAt;
 
   @override
   String toString() {
-    return 'Checkin(id: $id, whisky: $whisky, user: $user, review: $review, rating: $rating, noseReview: $noseReview, noseRating: $noseRating, tasteReview: $tasteReview, tasteRating: $tasteRating, finishReview: $finishReview, finishRating: $finishRating)';
+    return 'Checkin(id: $id, whisky: $whisky, user: $user, review: $review, rating: $rating, noseReview: $noseReview, noseRating: $noseRating, tasteReview: $tasteReview, tasteRating: $tasteRating, finishReview: $finishReview, finishRating: $finishRating, postedAt: $postedAt)';
   }
 
   @override
@@ -308,7 +324,8 @@ class _$_Checkin implements _Checkin {
             const DeepCollectionEquality()
                 .equals(other.finishReview, finishReview) &&
             const DeepCollectionEquality()
-                .equals(other.finishRating, finishRating));
+                .equals(other.finishRating, finishRating) &&
+            const DeepCollectionEquality().equals(other.postedAt, postedAt));
   }
 
   @JsonKey(ignore: true)
@@ -325,7 +342,8 @@ class _$_Checkin implements _Checkin {
       const DeepCollectionEquality().hash(tasteReview),
       const DeepCollectionEquality().hash(tasteRating),
       const DeepCollectionEquality().hash(finishReview),
-      const DeepCollectionEquality().hash(finishRating));
+      const DeepCollectionEquality().hash(finishRating),
+      const DeepCollectionEquality().hash(postedAt));
 
   @JsonKey(ignore: true)
   @override
@@ -352,7 +370,8 @@ abstract class _Checkin implements Checkin {
       final String? tasteReview,
       final double? tasteRating,
       final String? finishReview,
-      final double? finishRating}) = _$_Checkin;
+      final double? finishRating,
+      required final DateTime postedAt}) = _$_Checkin;
 
   factory _Checkin.fromJson(Map<String, dynamic> json) = _$_Checkin.fromJson;
 
@@ -378,6 +397,8 @@ abstract class _Checkin implements Checkin {
   String? get finishReview;
   @override
   double? get finishRating;
+  @override
+  DateTime get postedAt;
   @override
   @JsonKey(ignore: true)
   _$$_CheckinCopyWith<_$_Checkin> get copyWith =>

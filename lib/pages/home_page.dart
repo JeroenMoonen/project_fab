@@ -5,6 +5,7 @@ import 'package:project_fab/pages/people/people_page.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
+  static const routeName = '/';
   const HomePage({Key? key}) : super(key: key);
 
   @override

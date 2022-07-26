@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
-import 'package:project_fab/services/authentication_service.dart';
+import 'package:project_fab/pages/home_page.dart';
+import 'package:project_fab/pages/onboarding/login_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
+  static const routeName = '/forgot-password';
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
@@ -33,7 +35,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    Navigator.pushReplacementNamed(context, '/feed');
+    Navigator.pushReplacementNamed(
+      context,
+      HomePage.routeName,
+    );
   }
 
   @override
@@ -146,7 +151,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          '/login',
+                          LoginPage.routeName,
                           (_) => false,
                         );
                       },
