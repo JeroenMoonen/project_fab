@@ -40,9 +40,9 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-
       await UserService.getUser(
         id: auth.userId,
+        fromLocal: false,
         saveToLocal: true,
         isMe: true,
       );

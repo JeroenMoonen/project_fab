@@ -19,23 +19,30 @@ class UserService {
     await prefs.setString('user_${user.id}', jsonEncode(user));
   }
 
-  static Future<User> _getUserFromLocal(int userId) async {
+  static Future<User?> _getUserFromLocal(int userId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map<String, dynamic> userMap = {};
     final String? userStr = prefs.getString('user_$userId');
     if (userStr != null) {
       userMap = jsonDecode(userStr) as Map<String, dynamic>;
+      return User.fromJson(userMap);
     }
 
-    return User.fromJson(userMap);
+    return null;
   }
 
   static Future<User> getMe() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int userId = prefs.getInt(meUserKey) as int;
 
-    return _getUserFromLocal(userId);
+    final User? user = await _getUserFromLocal(userId);
+
+    if (user == null) {
+      throw new Exception('User not found.');
+    }
+
+    return user;
   }
 
   static Future<User> getUser({
@@ -44,11 +51,6 @@ class UserService {
     bool saveToLocal = false,
     bool isMe = false,
   }) async {
-    var result = await _getUserFromLocal(id);
-    if (result != null) {
-      return result;
-    }
-
     try {
       final Response response =
           await HttpClient.create().get('${HttpClient.apiUrl}/users/$id');

@@ -1,13 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
+import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/checkin_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -26,6 +27,15 @@ class _FeedPageState extends State<FeedPage> {
         centerTitle: true,
         backgroundColor: Colors.orange,
         elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () => {},
+          ),
+        ],
         title: const Text(
           'From A Bottle',
           style: TextStyle(
