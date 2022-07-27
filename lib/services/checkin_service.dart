@@ -21,7 +21,7 @@ class CheckinService {
   }
 
   // This method implements an HTTP request with caching
-  static Future<List<Checkin>?> getCheckinsWithCaching() async {
+  static Future<List<Checkin>> getCheckinsWithCaching() async {
     try {
       final response = await HttpClient.create(
         cacheOptions: HttpClient.defaultCacheOptions.copyWith(

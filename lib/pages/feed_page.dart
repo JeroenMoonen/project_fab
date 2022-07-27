@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
-import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/checkin_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -20,6 +16,32 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  late List<Checkin> _checkinList;
+  late Future<void> _initCheckinData;
+
+  @override
+  void initState() {
+    super.initState();
+    _initCheckinData = _initCheckins();
+  }
+
+  Future<void> _initCheckins() async {
+    final List<Checkin> checkins =
+        await CheckinService.getCheckinsWithCaching();
+
+    _checkinList = checkins;
+  }
+
+  Future<void> _refreshCheckins() async {
+    final checkins = await CheckinService.getCheckinsWithCaching();
+    setState(() {
+      _checkinList = checkins;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +72,84 @@ class _FeedPageState extends State<FeedPage> {
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 0,
-            ),
-            Expanded(
-              child: Container(
-                child: _createBody(context),
-              ),
-            )
-          ],
+        child: SafeArea(
+          child: FutureBuilder(
+            future: _initCheckinData,
+            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+
+                  return RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    onRefresh: _refreshCheckins,
+                    child: ListView.builder(
+                      itemCount: _checkinList.length,
+                      itemBuilder: (context, index) {
+                        return CustomCard(
+                          _checkinList[index],
+                          index,
+                          context,
+                        );
+                      },
+                    ),
+                  );
+              }
+
+              return const Center(
+                child: Text(
+                    'First add some friends to see what they\'re drinking.'),
+              );
+              // if (snapshot.connectionState == ConnectionState.waiting) {
+              // return const Center(
+              //   child: CircularProgressIndicator(),
+              // );
+              // }
+              // if (snapshot.connectionState == ConnectionState.done) {
+              //   if (snapshot.hasError) {
+              //     WidgetsBinding.instance.addPostFrameCallback((_) {
+              //       Navigator.popAndPushNamed(context, LoginPage.routeName);
+              //     });
+
+              //     return Center(
+              //       child: Text(
+              //         snapshot.error.toString(),
+              //       ),
+              //     );
+              //   }
+              // }
+
+              // if (snapshot.hasData) {
+              //   print('oaiwjef');
+              // return RefreshIndicator(
+              //   //TODO: check if this works!
+              //   key: _refreshIndicatorKey,
+              //   onRefresh: _refreshCheckins,
+              //   child: ListView.separated(
+              //     separatorBuilder: (context, idx) => const Padding(
+              //       padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+              //     ),
+              //     itemCount: _checkinList.length,
+              //     itemBuilder: (context, index) {
+              //       var item = snapshot.data![index];
+
+              //       return CustomCard(item, index, context);
+              //     },
+              //   ),
+              // );
+              // }
+
+              // // Empty container.
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -81,60 +170,19 @@ class _FeedPageState extends State<FeedPage> {
   }
 }
 
-Widget _createBody(BuildContext context) {
-  return FutureBuilder(
-    future: CheckinService.getCheckinsWithCaching(),
-    builder: (context, AsyncSnapshot<List<Checkin>?> snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      if (snapshot.connectionState == ConnectionState.done) {
-        if (snapshot.hasError) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.popAndPushNamed(context, LoginPage.routeName);
-          });
-
-          return Center(
-            child: Text(
-              snapshot.error.toString(),
-            ),
-          );
-        }
-      }
-
-      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-        return RefreshIndicator(
-          // onRefresh:() async => setState(() {})
-          onRefresh: () async => null,
-          child: ListView.separated(
-            separatorBuilder: (context, idx) => const Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-            ),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              var item = snapshot.data![index];
-
-              return Card(item, index);
-            },
-          ),
-        );
-      }
-
-      // Empty container.
-      return const Center(
-        child: Text('First add some friends to see what they\'re drinking.'),
-      );
-    },
-  );
-}
-
-class Card extends StatelessWidget {
-  final Checkin item;
+class CustomCard extends StatelessWidget {
+  final Checkin checkin;
   final int index;
+  final BuildContext context;
 
-  const Card(this.item, this.index);
+  const CustomCard(this.checkin, this.index, this.context);
+
+  void onPressedChat() {
+    Navigator.of(context).pushNamed(
+      CheckinDetailPage.routeName,
+      arguments: checkin,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +247,7 @@ class Card extends StatelessWidget {
                 onTap: () => Navigator.pushNamed(
                   context,
                   ProfilePage.routeName,
-                  arguments: item.user,
+                  arguments: checkin.user,
                 ),
                 child: const CircleAvatar(
                   child: Text('me'),
@@ -214,13 +262,14 @@ class Card extends StatelessWidget {
                   onTap: () => Navigator.pushNamed(
                     context,
                     ProfilePage.routeName,
-                    arguments: item.user,
+                    arguments: checkin.user,
                   ),
-                  child: Text('${item.user.firstName} ${item.user.lastName}'),
+                  child: Text(
+                      '${checkin.user.firstName} ${checkin.user.lastName}'),
                 ),
                 Text(
                   timeago.format(
-                    item.postedAt,
+                    checkin.postedAt,
                     locale: 'en',
                     allowFromNow: true,
                   ),
@@ -237,10 +286,14 @@ class Card extends StatelessWidget {
           onTap: () => Navigator.pushNamed(
             context,
             CheckinDetailPage.routeName,
-            arguments: item,
+            arguments: checkin,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.only(
+              top: 10.0,
+              left: 10,
+              right: 10,
+            ),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(
                 Radius.circular(10),
@@ -254,7 +307,6 @@ class Card extends StatelessWidget {
                       imageUrls[index],
                       fit: BoxFit.cover,
                     ),
-                    // child: Text('hello'),
                   ),
                   Positioned(
                     top: 0,
@@ -328,7 +380,7 @@ class Card extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              item.whisky.name,
+                              checkin.whisky.name,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -352,6 +404,56 @@ class Card extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+        //   child: Row(
+        //     children: const <Widget>[
+        //       Text(
+        //         'Rianne Heijnen and 83 others cheered this',
+        //         style: TextStyle(
+        //           fontSize: 14,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(top: 0, bottom: 0),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.chat_outlined,
+                        size: 18,
+                        color: Colors.black,
+                      ),
+                      onPressed: onPressedChat,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(top: 0, bottom: 0),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.favorite_outline,
+                        size: 18,
+                        color: Colors.black,
+                      ),
+                      onPressed: () => {},
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ],
