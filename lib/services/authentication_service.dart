@@ -69,7 +69,6 @@ class AuthenticationService {
   }
 
   static Future<void> logout() async {
-    await UserService.destroyData();
     await JwtStorage().removeJwt();
   }
   // Send un-cached http request

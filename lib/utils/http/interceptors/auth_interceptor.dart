@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:project_fab/exceptions/jwt_is_empty_exception.dart';
 import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/jwt_storage.dart';
 
@@ -22,9 +20,9 @@ class AuthInterceptor extends Interceptor {
     if (await AuthenticationService.isLoggedIn() == true) {
       var token = await JwtStorage().getJwt();
 
-      if (token == null) {
-        throw JwtIsEmptyException();
-      }
+      // if (token == null) {
+      //   throw JwtIsEmptyException();
+      // }
 
       if (kDebugMode) {
         print('Use bearer token: `$token`');

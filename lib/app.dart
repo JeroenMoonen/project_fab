@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/discover/discover_page.dart';
 import 'package:project_fab/pages/home_page.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         PeoplePage.routeName: (context) => const PeoplePage(),
         DiscoverPage.routeName: (context) => const DiscoverPage(),
         CheckinDetailPage.routeName: (context) => const CheckinDetailPage(),
+        AddCheckin.routeName: (context) => const AddCheckin(),
       },
       debugShowCheckedModeBanner: false,
       navigatorObservers: const [

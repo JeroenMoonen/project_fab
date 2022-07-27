@@ -6,7 +6,10 @@ import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
+import 'package:project_fab/pages/onboarding/login_page.dart';
+import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/services/checkin_service.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -56,12 +59,7 @@ class _FeedPageState extends State<FeedPage> {
         ),
         backgroundColor: primaryColor,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => const AddCheckin(),
-            ),
-          );
+          Navigator.pushNamed(context, AddCheckin.routeName);
         },
         tooltip: 'Add Activity',
         child: const Icon(
@@ -85,7 +83,7 @@ Widget _createBody(BuildContext context) {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.hasError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.popAndPushNamed(context, '/login');
+            Navigator.popAndPushNamed(context, LoginPage.routeName);
           });
 
           return Center(
@@ -101,7 +99,9 @@ Widget _createBody(BuildContext context) {
           // onRefresh:() async => setState(() {})
           onRefresh: () async => null,
           child: ListView.separated(
-            separatorBuilder: (context, idx) => const Divider(),
+            separatorBuilder: (context, idx) => const Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+            ),
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var item = snapshot.data![index];
@@ -125,9 +125,7 @@ class Card extends StatelessWidget {
   final int index;
 
   const Card(this.item, this.index);
-  // final String imagePath, cityName, monthYear, discount, oldPrice, newPrice;
-  // CityCard(this.imagePath, this.cityName, this.monthYear, this.discount,
-  //     this.oldPrice, this.newPrice);
+
   @override
   Widget build(BuildContext context) {
     final imageUrls = [
@@ -197,9 +195,20 @@ class Card extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('${item.user.firstName} ${item.user.lastName}'),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ProfilePage.routeName,
+                    arguments: item.user,
+                  ),
+                  child: Text('${item.user.firstName} ${item.user.lastName}'),
+                ),
                 Text(
-                  'Posted at ${DateFormat('yyyy-MM-dd - kk:mm').format(item.postedAt)}',
+                  timeago.format(
+                    item.postedAt,
+                    locale: 'en',
+                    allowFromNow: true,
+                  ),
                   style: const TextStyle(
                     color: Colors.black54,
                     fontSize: 12,
@@ -264,9 +273,10 @@ class Card extends StatelessWidget {
                             Text(
                               '4/5 star rating',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.normal),
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ],
                         ),
@@ -291,37 +301,39 @@ class Card extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: 10,
-                    bottom: 10,
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              item.whisky.name,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 1),
-                            ),
-                            const Text(
-                              'Distillery name here',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Positioned(
+                  //   left: 10,
+                  //   bottom: 10,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: <Widget>[
+                  //           Text(
+                  //             item.whisky.name,
+                  //             style: const TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 16,
+                  //               fontWeight: FontWeight.w700,
+                  //               letterSpacing: 1,
+                  //             ),
+                  //           ),
+                  //           const Text(
+                  //             'Distillery name here',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 13,
+                  //               fontWeight: FontWeight.normal,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

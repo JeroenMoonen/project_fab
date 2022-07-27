@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddCheckin extends StatefulWidget {
+  static const routeName = '/add-checkin';
+
   const AddCheckin({Key? key}) : super(key: key);
 
   @override

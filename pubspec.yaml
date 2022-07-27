@@ -43,6 +43,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   intl: ^0.17.0
   shared_preferences: ^2.0.15
+  timeago: ^3.2.2
 
 dev_dependencies:
   flutter_test:

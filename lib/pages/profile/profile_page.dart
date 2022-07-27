@@ -18,16 +18,25 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    futureUser = UserService.getMe();
+
+    // final args = ModalRoute.of(context)!.settings.arguments as User;
+    // print(args.id);
+    // futureUser = UserService.getUser(id: 1, saveToLocal: false);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      final args = ModalRoute.of(context)!.settings.arguments as User;
+      futureUser = UserService.getUser(id: args.id, saveToLocal: false);
+    } else {
+      futureUser = UserService.getMe();
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.orange,
-        // title: const Text('Profile'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
