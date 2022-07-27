@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project_fab/exceptions/dio_exception.dart';
@@ -8,11 +7,13 @@ import '../utils/http/http_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
+  static const meUserKey = 'meUserId';
+
   static void _saveUserToLocal(User user, bool isMe) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (isMe) {
-      await prefs.setInt('meUserId', user.id);
+      await prefs.setInt(meUserKey, user.id);
     }
 
     await prefs.setString('user_${user.id}', jsonEncode(user));
@@ -32,16 +33,22 @@ class UserService {
 
   static Future<User> getMe() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final int userId = prefs.getInt('meUserId') as int;
+    final int userId = prefs.getInt(meUserKey) as int;
 
     return _getUserFromLocal(userId);
   }
 
   static Future<User> getUser({
     required int id,
+    bool fromLocal = true,
     bool saveToLocal = false,
     bool isMe = false,
   }) async {
+    var result = await _getUserFromLocal(id);
+    if (result != null) {
+      return result;
+    }
+
     try {
       final Response response =
           await HttpClient.create().get('${HttpClient.apiUrl}/users/$id');

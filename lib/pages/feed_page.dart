@@ -183,11 +183,16 @@ class Card extends StatelessWidget {
       children: [
         Row(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: CircleAvatar(
-                child: Text(
-                  'me',
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  ProfilePage.routeName,
+                  arguments: item.user,
+                ),
+                child: const CircleAvatar(
+                  child: Text('me'),
                 ),
               ),
             ),
@@ -301,39 +306,39 @@ class Card extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   left: 10,
-                  //   bottom: 10,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   child: Row(
-                  //     mainAxisSize: MainAxisSize.max,
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: <Widget>[
-                  //       Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: <Widget>[
-                  //           Text(
-                  //             item.whisky.name,
-                  //             style: const TextStyle(
-                  //               color: Colors.white,
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.w700,
-                  //               letterSpacing: 1,
-                  //             ),
-                  //           ),
-                  //           const Text(
-                  //             'Distillery name here',
-                  //             style: TextStyle(
-                  //               color: Colors.white,
-                  //               fontSize: 13,
-                  //               fontWeight: FontWeight.normal,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  Positioned(
+                    left: 10,
+                    bottom: 10,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              item.whisky.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            const Text(
+                              'Distillery name here',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

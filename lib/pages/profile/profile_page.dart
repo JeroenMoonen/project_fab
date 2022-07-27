@@ -13,25 +13,44 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late Future<User> futureUser;
-
   @override
   void initState() {
     super.initState();
+  }
 
-    // final args = ModalRoute.of(context)!.settings.arguments as User;
-    // print(args.id);
-    // futureUser = UserService.getUser(id: 1, saveToLocal: false);
+  _fetchUser() {
+    //TODO: setState
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      final args = ModalRoute.of(context)!.settings.arguments as User;
+      return UserService.getUser(
+        id: args.id,
+        fromLocal: true,
+        saveToLocal: true,
+      );
+    }
+
+    return UserService.getMe();
+  }
+
+  void onLogout() {
+    AuthenticationService.logout();
+
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      LoginPage.routeName,
+      (_) => false,
+    );
+
+    var snackBar = const SnackBar(
+      content: Text('Succesfully logged out.'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (ModalRoute.of(context)!.settings.arguments != null) {
-      final args = ModalRoute.of(context)!.settings.arguments as User;
-      futureUser = UserService.getUser(id: args.id, saveToLocal: false);
-    } else {
-      futureUser = UserService.getMe();
-    }
+    late Future<User> futureUser = _fetchUser();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,21 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Icons.logout,
               color: Colors.white,
             ),
-            onPressed: () {
-              AuthenticationService.logout();
-
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LoginPage.routeName,
-                (_) => false,
-              );
-
-              var snackBar = const SnackBar(
-                content: Text('Succesfully logged out.'),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            },
+            onPressed: onLogout,
           ),
         ],
       ),
