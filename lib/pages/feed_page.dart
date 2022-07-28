@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/components/avatar.dart';
+import 'package:project_fab/components/time_ago.dart';
 import 'package:project_fab/config.dart';
 import 'package:project_fab/models/models.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
-import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/services/checkin_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -243,15 +244,9 @@ class CustomCard extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  ProfilePage.routeName,
-                  arguments: checkin.user,
-                ),
-                child: const CircleAvatar(
-                  child: Text('me'),
-                ),
+              child: UserAvatar(
+                size: UserAvatar.small,
+                user: checkin.user,
               ),
             ),
             Column(
@@ -265,18 +260,11 @@ class CustomCard extends StatelessWidget {
                     arguments: checkin.user,
                   ),
                   child: Text(
-                      '${checkin.user.firstName} ${checkin.user.lastName}'),
+                    '${checkin.user.firstName} ${checkin.user.lastName}',
+                  ),
                 ),
-                Text(
-                  timeago.format(
-                    checkin.postedAt,
-                    locale: 'en',
-                    allowFromNow: true,
-                  ),
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontSize: 12,
-                  ),
+                TimeAgo(
+                  date: checkin.postedAt,
                 ),
               ],
             ),

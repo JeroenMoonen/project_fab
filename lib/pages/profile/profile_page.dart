@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/components/avatar.dart';
 import 'package:project_fab/models/user.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
@@ -22,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //TODO: setState
     if (ModalRoute.of(context)!.settings.arguments != null) {
       final args = ModalRoute.of(context)!.settings.arguments as User;
+
       return UserService.getUser(
         id: args.id,
         fromLocal: true,
@@ -85,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildBody(User data) {
+  Widget _buildBody(User user) {
     return SafeArea(
       child: ListView(
         children: <Widget>[
@@ -109,17 +111,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   Container(
                     height: 90,
                     margin: const EdgeInsets.only(top: 60),
-                    child: const CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white,
-                      child: Text('plaatje'),
+                    child: UserAvatar(
+                      user: user,
+                      size: UserAvatar.big,
                     ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(4),
                   ),
                   Text(
-                    '${data.firstName.toString()} ${data.lastName.toString()}',
+                    '${user.firstName.toString()} ${user.lastName.toString()}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
@@ -161,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
                                 child: Text(
-                                  '${data.checkinCount}',
+                                  '${user.checkinCount}',
                                   style: const TextStyle(
                                     color: Colors.black87,
                                     fontSize: 16,
@@ -185,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
                                 child: Text(
-                                  "${data.friendsCount}",
+                                  "${user.friendsCount}",
                                   style: const TextStyle(
                                     color: Colors.black87,
                                     fontSize: 16,
