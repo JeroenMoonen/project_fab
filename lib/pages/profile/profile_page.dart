@@ -113,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     margin: const EdgeInsets.only(top: 60),
                     child: UserAvatar(
                       user: user,
-                      size: UserAvatar.big,
+                      radius: UserAvatar.l,
                     ),
                   ),
                   const Padding(

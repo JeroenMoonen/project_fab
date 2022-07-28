@@ -7,7 +7,6 @@ import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/services/checkin_service.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -104,51 +103,6 @@ class _FeedPageState extends State<FeedPage> {
                     ),
                   );
               }
-
-              return const Center(
-                child: Text(
-                    'First add some friends to see what they\'re drinking.'),
-              );
-              // if (snapshot.connectionState == ConnectionState.waiting) {
-              // return const Center(
-              //   child: CircularProgressIndicator(),
-              // );
-              // }
-              // if (snapshot.connectionState == ConnectionState.done) {
-              //   if (snapshot.hasError) {
-              //     WidgetsBinding.instance.addPostFrameCallback((_) {
-              //       Navigator.popAndPushNamed(context, LoginPage.routeName);
-              //     });
-
-              //     return Center(
-              //       child: Text(
-              //         snapshot.error.toString(),
-              //       ),
-              //     );
-              //   }
-              // }
-
-              // if (snapshot.hasData) {
-              //   print('oaiwjef');
-              // return RefreshIndicator(
-              //   //TODO: check if this works!
-              //   key: _refreshIndicatorKey,
-              //   onRefresh: _refreshCheckins,
-              //   child: ListView.separated(
-              //     separatorBuilder: (context, idx) => const Padding(
-              //       padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-              //     ),
-              //     itemCount: _checkinList.length,
-              //     itemBuilder: (context, index) {
-              //       var item = snapshot.data![index];
-
-              //       return CustomCard(item, index, context);
-              //     },
-              //   ),
-              // );
-              // }
-
-              // // Empty container.
             },
           ),
         ),
@@ -245,7 +199,7 @@ class CustomCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: UserAvatar(
-                size: UserAvatar.small,
+                radius: UserAvatar.s,
                 user: checkin.user,
               ),
             ),

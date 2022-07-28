@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/avatar.dart';
+import 'package:project_fab/components/input.dart';
 import 'package:project_fab/components/time_ago.dart';
 import 'package:project_fab/models/checkin.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
@@ -14,6 +15,21 @@ class CheckinDetailPage extends StatefulWidget {
 }
 
 class _CheckinDetailPageState extends State<CheckinDetailPage> {
+  Widget _bottomComment() {
+    return makeInput(
+      label: 'Leave a comment',
+      onTap: () => {},
+      controller: null,
+    );
+
+    // return const TextField(
+    //   decoration: InputDecoration(
+    //     hintText: 'Leave a comment',
+    //     contentPadding: EdgeInsets.only(left: 10, right: 10),
+    //   ),
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
     final checkin = ModalRoute.of(context)!.settings.arguments as Checkin;
@@ -32,6 +48,11 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
         ),
         backgroundColor: Colors.orange,
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0,
+        child: _bottomComment(),
+      ),
       body: Column(
         children: [
           Padding(
@@ -40,90 +61,136 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
               left: 0,
               right: 0,
             ),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(0),
+            child: Stack(
+              children: <Widget>[
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300,
+                  child: Image.network(
+                    'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: 35,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black,
+                          Colors.black12,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  bottom: 0,
+                  width: MediaQuery.of(context).size.width,
+                  height: 100,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black,
+                          Colors.black12,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 10,
+                  bottom: 10,
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            checkin.whisky.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                          Text(
+                            checkin.whisky.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: UserAvatar(
+                  radius: UserAvatar.xs,
+                  user: checkin.user,
+                ),
               ),
-              child: Stack(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                    child: Image.network(
-                      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-                      fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      ProfilePage.routeName,
+                      arguments: checkin.user,
+                    ),
+                    child: Text(
+                      '${checkin.user.firstName} ${checkin.user.lastName}',
                     ),
                   ),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    width: MediaQuery.of(context).size.width / 3,
-                    height: 35,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black,
-                            Colors.black12,
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    width: MediaQuery.of(context).size.width,
-                    height: 100,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black,
-                            Colors.black12,
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    bottom: 10,
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              checkin.whisky.name,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 1,
-                              ),
-                            ),
-                            Text(
-                              checkin.whisky.name,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  TimeAgo(
+                    date: checkin.postedAt,
                   ),
                 ],
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 5,
+            ),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: const Divider(),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5, left: 15),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                'Cheers & comments',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -132,7 +199,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: UserAvatar(
-                  size: UserAvatar.small,
+                  radius: UserAvatar.xs,
                   user: checkin.user,
                 ),
               ),

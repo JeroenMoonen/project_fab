@@ -61,6 +61,33 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Widget _makeInput({label, controller, obsureText = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        makeInput(
+          label: label,
+          controller: controller,
+          obsureText: obsureText,
+        ),
+        const SizedBox(
+          height: 30,
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -110,11 +137,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: Column(
                       children: [
-                        makeInput(
+                        _makeInput(
                           label: "E-mail",
                           controller: _emailController,
                         ),
-                        makeInput(
+                        _makeInput(
                           label: "Password",
                           obsureText: true,
                           controller: _passwordController,

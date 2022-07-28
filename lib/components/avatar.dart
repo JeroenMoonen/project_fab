@@ -4,26 +4,33 @@ import 'package:project_fab/pages/profile/profile_page.dart';
 
 class UserAvatar extends StatelessWidget {
   final User user;
-  final double size;
-  static const big = 50.0;
-  static const small = 20.0;
+  final double radius;
+  static const l = 50.0;
+  static const s = 20.0;
+  static const xs = 15.0;
 
   const UserAvatar({
     Key? key,
     required this.user,
-    required this.size,
+    required this.radius,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double _getFontSize() {
-      final size = this.size;
+      final radius = this.radius;
 
-      if (size == UserAvatar.big) {
-        return 20.0;
+      if (radius == UserAvatar.xs) {
+        return 10.0;
+      }
+      if (radius == UserAvatar.s) {
+        return 15.0;
+      }
+      if (radius == UserAvatar.l) {
+        return 25.0;
       }
 
-      return 15.0;
+      return 30.0;
     }
 
     return GestureDetector(
@@ -33,10 +40,10 @@ class UserAvatar extends StatelessWidget {
         arguments: user,
       ),
       child: CircleAvatar(
-        radius: size,
+        radius: radius,
         backgroundColor: Colors.black,
         child: Text(
-          'me',
+          '${user.firstName![0]}${user.lastName![0]}',
           style: TextStyle(
             color: Colors.white,
             fontSize: _getFontSize(),

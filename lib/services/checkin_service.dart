@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
@@ -25,7 +23,9 @@ class CheckinService {
     try {
       final response = await HttpClient.create(
         cacheOptions: HttpClient.defaultCacheOptions.copyWith(
-          maxStale: const Nullable(Duration(days: 1)),
+          maxStale: const Nullable(
+            Duration(days: 1),
+          ),
         ),
       ).get('${HttpClient.apiUrl}/checkins');
 
