@@ -78,36 +78,52 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     );
   }
 
-  Widget postedBy(Checkin checkin) {
-    return Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: UserAvatar(
-            radius: UserAvatar.s,
-            user: checkin.user,
+  Widget content(Checkin checkin) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
+      child: Column(
+        children: [Text(checkin.review)],
+      ),
+    );
+  }
+
+  Widget whoItPosted(Checkin checkin) {
+    return Padding(
+      padding: const EdgeInsets.only(),
+      child: Column(
+        children: [
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: UserAvatar(
+                  radius: UserAvatar.s,
+                  user: checkin.user,
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      ProfilePage.routeName,
+                      arguments: checkin.user,
+                    ),
+                    child: Text(
+                      '${checkin.user.firstName} ${checkin.user.lastName}',
+                    ),
+                  ),
+                  TimeAgo(
+                    date: checkin.postedAt,
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                ProfilePage.routeName,
-                arguments: checkin.user,
-              ),
-              child: Text(
-                '${checkin.user.firstName} ${checkin.user.lastName}',
-              ),
-            ),
-            TimeAgo(
-              date: checkin.postedAt,
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -202,6 +218,19 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     );
   }
 
+  Widget dividerForComments() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 5,
+      ),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: const Divider(),
+      ),
+    );
+    ;
+  }
+
   @override
   Widget build(BuildContext context) {
     final checkin = ModalRoute.of(context)!.settings.arguments as Checkin;
@@ -229,16 +258,9 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
         child: Column(
           children: <Widget>[
             imageTop(checkin),
-            postedBy(checkin),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 5,
-              ),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: const Divider(),
-              ),
-            ),
+            whoItPosted(checkin),
+            content(checkin),
+            dividerForComments(),
             Padding(
               padding: const EdgeInsets.only(bottom: 5, left: 15),
               child: Container(
@@ -251,7 +273,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
                 ),
               ),
             ),
-            comments(checkin.id)
+            comments(checkin.id),
           ],
         ),
       ),

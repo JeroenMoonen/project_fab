@@ -11,6 +11,16 @@ Used [this](https://github.com/danvick/flutter_boilerplate) boilerplate.
 flutter pub run build_runner build
 ```  
 
+## iOS 16 (public beta) release on iPhone
+```
+pod cache clean --all
+pod deintegrate
+pod setup
+pod install
+pod repo update
+sudo gem install cocoapods
+```
+
 ## Docs:
 You actually either:
 

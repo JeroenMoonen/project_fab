@@ -40,7 +40,7 @@ class CommentItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 5.0),
+                const SizedBox(height: 1.0),
                 Text(
                   comment.body,
                 ),
