@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_fab/components/avatar.dart';
 import 'package:project_fab/models/user.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
+import 'package:project_fab/pages/profile/profile_settings_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/user_service.dart';
 
@@ -20,23 +21,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _fetchUser() {
-    //TODO: setState
-    if (ModalRoute.of(context)!.settings.arguments != null) {
-      final args = ModalRoute.of(context)!.settings.arguments as User;
-
-      return UserService.getUser(
-        id: args.id,
-        fromLocal: true,
-        saveToLocal: true,
-      );
-    }
-
     return UserService.getMe();
   }
 
-  void onLogout() {
-    AuthenticationService.logout();
-
+  void _onSavePressed() {
     Navigator.pushNamedAndRemoveUntil(
       context,
       LoginPage.routeName,
@@ -58,13 +46,23 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.orange,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+          onPressed: () => Navigator.pushNamed(
+            context,
+            ProfileSettingsPage.routeName,
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
-            onPressed: onLogout,
+            onPressed: _onSavePressed,
           ),
         ],
       ),
@@ -98,14 +96,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 330,
                 color: Colors.orange,
               ),
-              // const Positioned(
-              //   top: 10,
-              //   right: 30,
-              //   child: Icon(
-              //     Icons.settings,
-              //     color: Colors.white,
-              //   ),
-              // ),
               Column(
                 children: <Widget>[
                   Container(
@@ -223,11 +213,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  // UserInfo()
                 ],
-              )
+              ),
             ],
-          ),
+          )
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/datepicker.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/components/submit_button.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
@@ -39,6 +40,67 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordRepeatController.dispose();
 
     super.dispose();
+  }
+
+  Widget _makeInput({label, controller, obsureText = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        makeInput(
+          label: label,
+          controller: controller,
+          obsureText: obsureText,
+        ),
+        const SizedBox(
+          height: 30,
+        )
+      ],
+    );
+  }
+
+  Widget _makeDatepicker({label, controller, date, context}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        makeDatepicker(
+          label: 'Date of birth',
+          date: date,
+          controller: controller,
+          context: context,
+          onDateTimeChanged: (DateTime newDate) {
+            _dateOfBirthController.text =
+                '${newDate.day}/${newDate.month}/${newDate.year}';
+
+            setState(() => date = newDate);
+          },
+        ),
+        const SizedBox(
+          height: 30,
+        )
+      ],
+    );
   }
 
   @override
@@ -98,27 +160,21 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: [
-                        makeInput(
+                        _makeInput(
                           label: "E-mail",
                           controller: _emailController,
                         ),
-                        makeDatepicker(
+                        _makeDatepicker(
                           label: 'Date of birth',
                           date: date,
                           controller: _dateOfBirthController,
                           context: context,
-                          onDateTimeChanged: (DateTime newDate) {
-                            _dateOfBirthController.text =
-                                '${newDate.day}/${newDate.month}/${newDate.year}';
-
-                            setState(() => date = newDate);
-                          },
                         ),
-                        makeInput(
+                        _makeInput(
                             label: "Password",
                             controller: _passwordController,
                             obsureText: true),
-                        makeInput(
+                        _makeInput(
                           label: "Confirm Pasword",
                           controller: _passwordRepeatController,
                           obsureText: true,
@@ -136,57 +192,29 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 3, left: 3),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        border: const Border(
-                          bottom: BorderSide(color: Colors.black),
-                          top: BorderSide(color: Colors.black),
-                          right: BorderSide(color: Colors.black),
-                          left: BorderSide(color: Colors.black),
-                        ),
-                      ),
-                      child: MaterialButton(
-                        minWidth: double.infinity,
-                        height: 60,
-                        onPressed: () async {
-                          bool isRegistered =
-                              await AuthenticationService.register(
-                            email: _emailController.text,
-                            dateOfBirth: date,
-                            password: _passwordController.text,
+                  SubmitButton(
+                    label: 'Sign up',
+                    onPressed: () async {
+                      bool isRegistered = await AuthenticationService.register(
+                        email: _emailController.text,
+                        dateOfBirth: date,
+                        password: _passwordController.text,
+                      );
+
+                      if (isRegistered) {
+                        await AuthenticationService.authenticate(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.popAndPushNamed(
+                            context,
+                            HomePage.routeName,
                           );
-
-                          if (isRegistered) {
-                            await AuthenticationService.authenticate(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            );
-
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              Navigator.popAndPushNamed(
-                                context,
-                                HomePage.routeName,
-                              );
-                            });
-                          }
-                        },
-                        color: Colors.orangeAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
+                        });
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 20,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/components/submit_button.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 
@@ -30,15 +31,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   Future onResetPressed({required context}) async {
     var snackBar = const SnackBar(
-      content: Text('TODO'),
+      content: Text('TODO!'),
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    Navigator.pushReplacementNamed(
-      context,
-      HomePage.routeName,
-    );
+    // Navigator.pushReplacementNamed(
+    //   context,
+    //   HomePage.routeName,
+    // );
   }
 
   @override
@@ -95,51 +96,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                      top: 3,
-                      left: 3,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      border: const Border(
-                        bottom: BorderSide(
-                          color: Colors.black,
-                        ),
-                        top: BorderSide(
-                          color: Colors.black,
-                        ),
-                        right: BorderSide(
-                          color: Colors.black,
-                        ),
-                        left: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    child: MaterialButton(
-                      minWidth: double.infinity,
-                      height: 60,
-                      onPressed: () {
-                        onResetPressed(context: context);
-                      },
-                      color: Colors.orangeAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: const Text(
-                        "Send me a reset link",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
+                SubmitButton(
+                  label: 'Send me a reset link',
+                  onPressed: () => {onResetPressed(context: context)},
                 ),
                 const SizedBox(
                   height: 20,

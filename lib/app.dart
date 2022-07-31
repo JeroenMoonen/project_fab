@@ -8,6 +8,7 @@ import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/pages/onboarding/register_page.dart';
 import 'package:project_fab/pages/people/people_page.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
+import 'package:project_fab/pages/profile/profile_settings_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomePage.routeName,
       routes: {
         HomePage.routeName: (context) => const HomePage(),
+        ProfileSettingsPage.routeName: (context) => const ProfileSettingsPage(),
         LoginPage.routeName: (context) => const LoginPage(),
         RegisterPage.routeName: (context) => const RegisterPage(),
         ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),

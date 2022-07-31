@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/avatar.dart';
-import 'package:project_fab/components/comment.dart';
-import 'package:project_fab/components/input.dart';
 import 'package:project_fab/components/time_ago.dart';
 import 'package:project_fab/models/checkin.dart';
-import 'package:project_fab/models/comment.dart';
+import 'package:project_fab/pages/checkin/comment_list.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/services/comment_service.dart';
 
@@ -18,64 +16,80 @@ class CheckinDetailPage extends StatefulWidget {
 }
 
 class _CheckinDetailPageState extends State<CheckinDetailPage> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  late final TextEditingController _commentController;
+  final GlobalKey<CommentListState> _key = GlobalKey();
 
-  Future<List<Comment>> _fetchComments(checkinId) async {
-    return await CommentService.getComments(checkinId);
+  @override
+  void initState() {
+    _commentController = TextEditingController();
+
+    super.initState();
   }
 
-  Widget _bottomComment() {
-    return makeInput(
-      label: 'Leave a comment',
-      onTap: () => {},
-      controller: null,
-    );
+  @override
+  void dispose() {
+    _commentController.dispose();
+
+    super.dispose();
   }
 
-  Future<void> _refreshComments() async {
-    //TODO
-  }
-
-  Widget comments(checkinId) {
-    return FutureBuilder<List<Comment>>(
-      future: _fetchComments(checkinId),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const CircularProgressIndicator(),
-              const SizedBox(
-                height: 30,
+  Widget _bottomComment(int checkinId) {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLength: 255,
+            controller: _commentController,
+            decoration: const InputDecoration(
+              hintText: 'Leave a message..',
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 5.0,
+                vertical: 5.0,
               ),
-              Visibility(
-                visible: snapshot.hasData,
-                child: const Text('Loading..'),
-              )
-            ],
-          );
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return const Text('Error');
-          } else if (snapshot.hasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return CommentItem(comment: snapshot.data[index]);
-              },
-            );
-          }
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 0.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 0.0),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(40.0),
+          ),
+          child: RawMaterialButton(
+            onPressed: () {
+              CommentService.postComment(checkinId, _commentController.text);
+              _commentController.text = '';
 
-          return const Text('There are no comments yet. Be the first one!');
-        } else {
-          return Text('State: ${snapshot.connectionState}');
-        }
-      },
+              _refreshComments();
+            },
+            elevation: 0,
+            shape: const CircleBorder(),
+            constraints: const BoxConstraints.tightFor(
+              width: 48.0,
+              height: 48.0,
+            ),
+            child: const Padding(
+              padding: EdgeInsets.only(),
+              child: Icon(
+                Icons.send,
+                size: 27,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
+  }
+
+  void _refreshComments() async {
+    setState(() {});
   }
 
   Widget content(Checkin checkin) {
@@ -228,7 +242,6 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
         child: const Divider(),
       ),
     );
-    ;
   }
 
   @override
@@ -252,7 +265,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0,
-        child: _bottomComment(),
+        child: _bottomComment(checkin.id),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -273,7 +286,11 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
                 ),
               ),
             ),
-            comments(checkin.id),
+            CommentList(
+              refreshFunction: _refreshComments,
+              key: _key,
+              checkinId: checkin.id,
+            ),
           ],
         ),
       ),

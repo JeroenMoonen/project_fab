@@ -3,6 +3,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project_fab/exceptions/dio_exception.dart';
 import 'package:project_fab/exceptions/jwt_is_empty_exception.dart';
+import 'package:project_fab/services/authentication_service.dart';
 import '../models/models.dart';
 import '../utils/http/http_client.dart';
 

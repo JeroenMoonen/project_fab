@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/components/submit_button.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
 import 'package:project_fab/pages/onboarding/register_page.dart';
@@ -149,51 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                        top: 3,
-                        left: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        border: const Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                          ),
-                          top: BorderSide(
-                            color: Colors.black,
-                          ),
-                          right: BorderSide(
-                            color: Colors.black,
-                          ),
-                          left: BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      child: MaterialButton(
-                        minWidth: double.infinity,
-                        height: 60,
-                        onPressed: () {
-                          onLoginPressed(context: context);
-                        },
-                        color: Colors.orangeAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
+                  SubmitButton(
+                    label: 'Login',
+                    onPressed: () {
+                      onLoginPressed(context: context);
+                    },
                   ),
                   const SizedBox(
                     height: 20,
