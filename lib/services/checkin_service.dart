@@ -6,7 +6,6 @@ import '../models/models.dart';
 import '../utils/http/http_client.dart';
 
 class CheckinService {
-  // Send un-cached http request
   static Future<List<Checkin>> getCheckins(
     int pageKey,
     int pageSize,
@@ -29,7 +28,7 @@ class CheckinService {
           .toList();
     } on DioError catch (error) {
       if (kDebugMode) {
-        print("Error while getCheckinsWithCaching: ${error.message}.");
+        print("Error while getCheckins: ${error.message}.");
       }
       return Future.error(DioException.fromDioError(error));
     }
