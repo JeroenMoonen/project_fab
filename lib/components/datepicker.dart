@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:project_fab/components/input.dart';
 
 Widget makeDatepicker({label, date, controller, onDateTimeChanged, context}) {
-  //TODO convert this to TextField(keyboardType: TextInputType.datetime)
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
       context: context,

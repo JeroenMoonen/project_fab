@@ -67,7 +67,6 @@ class _CheckinPageState extends State<CheckinListPage> {
         onPressed: () {
           Navigator.pushNamed(context, AddCheckin.routeName);
         },
-        tooltip: 'Add Activity',
         child: const Icon(
           Icons.add,
           color: Colors.white,
@@ -78,6 +77,8 @@ class _CheckinPageState extends State<CheckinListPage> {
         child: PagedListView<int, Checkin>(
           pagingController: _pagingController,
           builderDelegate: PagedChildBuilderDelegate<Checkin>(
+            animateTransitions: true, // some flashy stuff
+            transitionDuration: const Duration(milliseconds: 200),
             itemBuilder: (context, item, index) => SizedBox(
               child: CheckinListItem(
                 item,

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project_fab/exceptions/dio_exception.dart';
 import 'package:project_fab/services/jwt_storage.dart';
-import 'package:project_fab/services/user_service.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/models.dart';
 import '../utils/http/http_client.dart';

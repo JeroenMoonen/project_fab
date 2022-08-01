@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
-import 'package:project_fab/components/submit_button.dart';
+
 import 'package:project_fab/services/user_service.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
@@ -45,26 +45,12 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
     final user = await UserService.getMe();
 
     setState(() {
-      if (user.firstName == null) {
-        _firstNameController.text = '';
-      } else {
-        _firstNameController.text = user.firstName!;
-      }
-      if (user.lastName == null) {
-        _lastNameController.text = '';
-      } else {
-        _lastNameController.text = user.lastName!;
-      }
-      if (user.about == null) {
-        _aboutController.text = '';
-      } else {
-        _aboutController.text = user.about!;
-      }
+      _firstNameController.text = user.firstName!;
+      _lastNameController.text = user.lastName!;
+      _aboutController.text = user.about!;
       _emailController.text = user.email;
       if (user.location == null) {
-        _locationController.text = '';
-      } else {
-        _locationController.text = user.location!;
+        // _locationController.text = user.location!;
       }
     });
   }
@@ -101,9 +87,18 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.orange,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
             _makeInput(
@@ -122,10 +117,6 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               label: 'About',
               controller: _aboutController,
             ),
-            SubmitButton(
-              label: 'Save',
-              onPressed: () {},
-            )
           ],
         ),
       ),

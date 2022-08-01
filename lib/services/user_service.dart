@@ -39,7 +39,7 @@ class UserService {
     final User? user = await _getUserFromLocal(userId);
 
     if (user == null) {
-      throw new Exception('User not found.');
+      throw Exception('User not found.');
     }
 
     return user;

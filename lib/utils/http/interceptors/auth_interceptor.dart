@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:project_fab/services/authentication_service.dart';
 import 'package:project_fab/services/jwt_storage.dart';
 

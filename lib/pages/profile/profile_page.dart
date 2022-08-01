@@ -3,7 +3,7 @@ import 'package:project_fab/components/avatar.dart';
 import 'package:project_fab/models/user.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/pages/profile/profile_settings_page.dart';
-import 'package:project_fab/services/authentication_service.dart';
+
 import 'package:project_fab/services/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
