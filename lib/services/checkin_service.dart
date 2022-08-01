@@ -3,16 +3,21 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project_fab/exceptions/dio_exception.dart';
 import 'package:project_fab/exceptions/jwt_is_empty_exception.dart';
-import 'package:project_fab/services/authentication_service.dart';
 import '../models/models.dart';
 import '../utils/http/http_client.dart';
 
 class CheckinService {
   // Send un-cached http request
-  static Future<List<Checkin>> getCheckins() async {
-    var url = '${HttpClient.apiUrl}/checkins';
+  static Future<List<Checkin>> getCheckins(
+    int pageKey,
+    int pageSize,
+  ) async {
+    print('Pagekey is $pageKey, size is $pageSize');
+    var url = Uri.parse('${HttpClient.apiUrl}/checkins?page=$pageKey');
 
-    var response = await HttpClient.create().get(url);
+    var response = await HttpClient.create().get(
+      url.toString(),
+    );
 
     return response.data
         .map<Checkin>((checkin) => Checkin.fromJson(checkin))

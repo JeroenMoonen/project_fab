@@ -24,9 +24,6 @@ class AuthInterceptor extends Interceptor {
       //   throw JwtIsEmptyException();
       // }
 
-      if (kDebugMode) {
-        print('Use bearer token: `$token`');
-      }
       options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
     }
 

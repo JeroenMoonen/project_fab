@@ -1,35 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:project_fab/config.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:project_fab/models/checkin.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
-import 'package:project_fab/pages/checkin/checkin_list.dart';
+import 'package:project_fab/pages/checkin/checkin_item.dart';
+import 'package:project_fab/services/checkin_service.dart';
 
-class FeedPage extends StatefulWidget {
-  const FeedPage({Key? key}) : super(key: key);
+class CheckinListPage extends StatefulWidget {
+  const CheckinListPage({Key? key}) : super(key: key);
 
   @override
-  State<FeedPage> createState() => _FeedPageState();
+  State<CheckinListPage> createState() => _CheckinPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+class _CheckinPageState extends State<CheckinListPage> {
+  final int _numberOfPostsPerRequest = 10;
+
+  final PagingController<int, Checkin> _pagingController =
+      PagingController(firstPageKey: 1);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final List<Checkin> checkins = await CheckinService.getCheckins(
+        pageKey,
+        _numberOfPostsPerRequest,
+      );
+
+      final isLastPage = checkins.length < _numberOfPostsPerRequest;
+      if (isLastPage) {
+        _pagingController.appendLastPage(checkins);
+      } else {
+        final nextPageKey = pageKey + 1;
+        _pagingController.appendPage(checkins, nextPageKey);
+      }
+    } catch (e) {
+      _pagingController.error = e;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.orange,
-        elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () => {},
-          ),
-        ],
         title: const Text(
           'From A Bottle',
           style: TextStyle(
@@ -38,19 +57,13 @@ class _FeedPageState extends State<FeedPage> {
             color: Colors.white,
           ),
         ),
-      ),
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: CheckinList(
-          refreshIndicatorKey: _refreshIndicatorKey,
-        ),
+        centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(40),
         ),
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.orange,
         onPressed: () {
           Navigator.pushNamed(context, AddCheckin.routeName);
         },
@@ -60,6 +73,26 @@ class _FeedPageState extends State<FeedPage> {
           color: Colors.white,
         ),
       ),
+      body: RefreshIndicator(
+        onRefresh: () => Future.sync(() => _pagingController.refresh()),
+        child: PagedListView<int, Checkin>(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<Checkin>(
+            itemBuilder: (context, item, index) => SizedBox(
+              child: CheckinListItem(
+                item,
+                context,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
   }
 }

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           });
         },
         children: const [
-          FeedPage(),
+          CheckinListPage(),
           DiscoverPage(),
           PeoplePage(),
           ProfilePage(),

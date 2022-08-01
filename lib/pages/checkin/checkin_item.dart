@@ -5,12 +5,15 @@ import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/components/time_ago.dart';
 
-class CheckinItem extends StatelessWidget {
+class CheckinListItem extends StatelessWidget {
   final Checkin checkin;
-  final int index;
   final BuildContext context;
 
-  const CheckinItem(this.checkin, this.index, this.context);
+  const CheckinListItem(
+    this.checkin,
+    this.context, {
+    Key? key,
+  }) : super(key: key);
 
   void onPressedChat() {
     Navigator.of(context).pushNamed(
@@ -21,57 +24,6 @@ class CheckinItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageUrls = [
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
-      'https://slijterijbartels.nl/wp-content/uploads/2019/04/Zwolse-Whiskys.jpg',
-      'https://www.rtlnieuws.nl/sites/default/files/content/images/2020/02/07/perfcol%202.jpg?itok=te52KopY&width=1024&height=576&impolicy=semi_dynamic',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj13c2XxxvH1jbtLDxw4popmfB4jeoRuWfSBNzM_MWsiiVNBwrobiQMcmRHwV3q5iap_o&usqp=CAU',
-    ];
-
     return Column(
       children: [
         Row(
@@ -126,7 +78,7 @@ class CheckinItem extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: 300,
                     child: Image.network(
-                      imageUrls[index],
+                      'https://cdn.webshopapp.com/shops/259604/files/203974904/japanse-whisky-kopen-3-redenen-waarom-je-dit-moet.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
