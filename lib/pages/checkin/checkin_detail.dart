@@ -22,6 +22,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
 
   final PagingController<int, Comment> _pagingController = PagingController(
     firstPageKey: 1,
+    invisibleItemsThreshold: 1, //default: 3
   );
 
   @override
