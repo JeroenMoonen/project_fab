@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
 import 'package:project_fab/components/submit_button.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/forgot_password_page.dart';
 import 'package:project_fab/pages/onboarding/register_page.dart';
@@ -151,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SubmitButton(
-                    label: 'Login',
+                    label: Localization.of(context).login,
                     onPressed: () {
                       onLoginPressed(context: context);
                     },

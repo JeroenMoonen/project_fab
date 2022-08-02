@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
 import 'package:project_fab/pages/checkin/checkin_detail.dart';
 import 'package:project_fab/pages/discover/discover_page.dart';
@@ -9,6 +10,7 @@ import 'package:project_fab/pages/onboarding/register_page.dart';
 import 'package:project_fab/pages/people/people_page.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/pages/profile/profile_settings_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -33,11 +35,19 @@ class MyApp extends StatelessWidget {
         CheckinDetailPage.routeName: (context) => const CheckinDetailPage(),
         AddCheckin.routeName: (context) => const AddCheckin(),
       },
-      debugShowCheckedModeBanner: false,
       navigatorObservers: const [
         // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)
       ],
-      // title: '',
+      localizationsDelegates: const [
+        FromABottleUpLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        // Locale('nl'),
+      ],
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -19,10 +19,10 @@ class CheckinDetailPage extends StatefulWidget {
 
 class _CheckinDetailPageState extends State<CheckinDetailPage> {
   late final TextEditingController _commentController;
+  late Checkin checkin;
 
   final PagingController<int, Comment> _pagingController = PagingController(
     firstPageKey: 1,
-    invisibleItemsThreshold: 1, //default: 3
   );
 
   @override
@@ -39,7 +39,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     super.dispose();
   }
 
-  Widget _bottomComment(int checkinId) {
+  Widget _newCommentBottomSection() {
     return Row(
       children: <Widget>[
         Flexible(
@@ -69,7 +69,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
           ),
           child: RawMaterialButton(
             onPressed: () async {
-              CommentService.postComment(checkinId, _commentController.text);
+              CommentService.postComment(checkin.id, _commentController.text);
               _commentController.text = '';
 
               await _refreshComments();
@@ -100,7 +100,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     );
   }
 
-  Widget content(Checkin checkin) {
+  Widget content() {
     return Padding(
       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
       child: Column(
@@ -109,7 +109,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     );
   }
 
-  Widget whoItPosted(Checkin checkin) {
+  Widget userInfo() {
     return Padding(
       padding: const EdgeInsets.only(),
       child: Column(
@@ -149,7 +149,7 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     );
   }
 
-  Widget imageTop(checkin) {
+  Widget imageInfo() {
     return Padding(
       padding: const EdgeInsets.only(
         top: 0,
@@ -254,7 +254,9 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final checkin = ModalRoute.of(context)!.settings.arguments as Checkin;
+    setState(() {
+      checkin = ModalRoute.of(context)!.settings.arguments as Checkin;
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -273,13 +275,13 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0,
-        child: _bottomComment(checkin.id),
+        child: _newCommentBottomSection(),
       ),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverToBoxAdapter(child: imageTop(checkin)),
-          SliverToBoxAdapter(child: whoItPosted(checkin)),
-          SliverToBoxAdapter(child: content(checkin)),
+          SliverToBoxAdapter(child: imageInfo()),
+          SliverToBoxAdapter(child: userInfo()),
+          SliverToBoxAdapter(child: content()),
           SliverToBoxAdapter(child: dividerForComments()),
           SliverToBoxAdapter(
             child: Padding(
