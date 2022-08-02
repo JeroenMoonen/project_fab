@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return UserService.getMe();
   }
 
-  void _onSavePressed() {
+  void _onLogoutPressed() {
     Navigator.pushNamedAndRemoveUntil(
       context,
       LoginPage.routeName,
@@ -46,23 +46,24 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.orange,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.settings,
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.pushNamed(
-            context,
-            ProfileSettingsPage.routeName,
-          ),
-        ),
+        //TODO: do not do this. The previous button is hidden then if redirected from other page.
+        // leading: IconButton(
+        //   icon: const Icon(
+        //     Icons.settings,
+        //     color: Colors.white,
+        //   ),
+        //   onPressed: () => Navigator.pushNamed(
+        //     context,
+        //     ProfileSettingsPage.routeName,
+        //   ),
+        // ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
-            onPressed: _onSavePressed,
+            onPressed: _onLogoutPressed,
           ),
         ],
       ),

@@ -15,8 +15,9 @@ class CheckinListPage extends StatefulWidget {
 class _CheckinPageState extends State<CheckinListPage> {
   final int _numberOfPostsPerRequest = 10;
 
-  final PagingController<int, Checkin> _pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, Checkin> _pagingController = PagingController(
+    firstPageKey: 1,
+  );
 
   @override
   void initState() {

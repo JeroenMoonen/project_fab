@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:project_fab/components/avatar.dart';
 import 'package:project_fab/components/time_ago.dart';
 import 'package:project_fab/models/checkin.dart';
-import 'package:project_fab/pages/checkin/comment_list.dart';
+import 'package:project_fab/models/comment.dart';
+import 'package:project_fab/pages/comment/comment_list.dart';
 import 'package:project_fab/pages/profile/profile_page.dart';
 import 'package:project_fab/services/comment_service.dart';
 
@@ -17,7 +19,10 @@ class CheckinDetailPage extends StatefulWidget {
 
 class _CheckinDetailPageState extends State<CheckinDetailPage> {
   late final TextEditingController _commentController;
-  final GlobalKey<CommentListState> _key = GlobalKey();
+
+  final PagingController<int, Comment> _pagingController = PagingController(
+    firstPageKey: 1,
+  );
 
   @override
   void initState() {
@@ -62,11 +67,11 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
             borderRadius: BorderRadius.circular(40.0),
           ),
           child: RawMaterialButton(
-            onPressed: () {
+            onPressed: () async {
               CommentService.postComment(checkinId, _commentController.text);
               _commentController.text = '';
 
-              _refreshComments();
+              await _refreshComments();
             },
             elevation: 0,
             shape: const CircleBorder(),
@@ -88,8 +93,10 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
     );
   }
 
-  void _refreshComments() async {
-    setState(() {});
+  Future _refreshComments() async {
+    return Future.sync(
+      () => _pagingController.refresh(),
+    );
   }
 
   Widget content(Checkin checkin) {
@@ -286,10 +293,12 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
                 ),
               ),
             ),
-            CommentList(
-              refreshFunction: _refreshComments,
-              key: _key,
-              checkinId: checkin.id,
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: CommentList(
+                pagingController: _pagingController,
+                checkinId: checkin.id,
+              ),
             ),
           ],
         ),
