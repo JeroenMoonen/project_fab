@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
+import 'package:project_fab/localization/localization.dart';
 
 import 'package:project_fab/services/user_service.dart';
 
@@ -102,19 +103,19 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
         child: Column(
           children: <Widget>[
             _makeInput(
-              label: 'First name',
+              label: Localization.of(context).profileSettingsFirstname,
               controller: _firstNameController,
             ),
             _makeInput(
-              label: 'Last name',
+              label: Localization.of(context).profileSettingsLastname,
               controller: _lastNameController,
             ),
             _makeInput(
-              label: 'Location',
+              label: Localization.of(context).profileSettingsLocation,
               controller: _locationController,
             ),
             _makeInput(
-              label: 'About',
+              label: Localization.of(context).profileSettingsAbout,
               controller: _aboutController,
             ),
           ],

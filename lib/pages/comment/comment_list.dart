@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/models/comment.dart';
 import 'package:project_fab/pages/comment/comment_list_item.dart';
 import 'package:project_fab/services/comment_service.dart';
@@ -71,15 +72,15 @@ class CommentListState extends State<CommentList> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'There are no comments yet',
+                    Localization.of(context).commentsThereAreNoComments,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text(
-                    'Leave a comment',
+                  Text(
+                    Localization.of(context).commentsLeaveAComment,
                     textAlign: TextAlign.center,
                   ),
                 ],

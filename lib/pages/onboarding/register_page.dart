@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_fab/components/datepicker.dart';
 import 'package:project_fab/components/input.dart';
 import 'package:project_fab/components/submit_button.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/pages/home_page.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/services/authentication_service.dart';
@@ -133,25 +134,25 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const <Widget>[
+                    children: <Widget>[
                       Text(
-                        "Registreren",
-                        style: TextStyle(
+                        Localization.of(context).registerPageTitle,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        "Maak een account aan",
-                        style: TextStyle(
+                        Localization.of(context).registerSubTitle,
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       )
                     ],
@@ -161,21 +162,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       children: [
                         _makeInput(
-                          label: "E-mail",
+                          label: Localization.of(context).registerEmail,
                           controller: _emailController,
                         ),
                         _makeDatepicker(
-                          label: 'Date of birth',
+                          label: Localization.of(context).registerDateOfBirth,
                           date: date,
                           controller: _dateOfBirthController,
                           context: context,
                         ),
                         _makeInput(
-                            label: "Password",
+                            label: Localization.of(context).registerPassword,
                             controller: _passwordController,
                             obsureText: true),
                         _makeInput(
-                          label: "Confirm Pasword",
+                          label:
+                              Localization.of(context).registerConfirmPassword,
                           controller: _passwordRepeatController,
                           obsureText: true,
                         ),
@@ -193,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SubmitButton(
-                    label: 'Sign up',
+                    label: Localization.of(context).registerSubmit,
                     onPressed: () async {
                       bool isRegistered = await AuthenticationService.register(
                         email: _emailController.text,
@@ -230,9 +232,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             (_) => false,
                           );
                         },
-                        child: const Text(
-                          "Already have an account?",
-                          style: TextStyle(
+                        child: Text(
+                          Localization.of(context).registerLogin,
+                          style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black,
                           ),

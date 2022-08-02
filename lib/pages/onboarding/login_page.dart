@@ -110,25 +110,25 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   Column(
-                    children: const <Widget>[
+                    children: <Widget>[
                       Text(
-                        "Login",
-                        style: TextStyle(
+                        Localization.of(context).loginPageTitle,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        "Welcome back!",
-                        style: TextStyle(
+                        Localization.of(context).loginSubTitle,
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       )
                     ],
@@ -140,11 +140,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         _makeInput(
-                          label: "E-mail",
+                          label: Localization.of(context).loginEmail,
                           controller: _emailController,
                         ),
                         _makeInput(
-                          label: "Password",
+                          label: Localization.of(context).loginPassword,
                           obsureText: true,
                           controller: _passwordController,
                         ),
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SubmitButton(
-                    label: Localization.of(context).login,
+                    label: Localization.of(context).loginSubmit,
                     onPressed: () {
                       onLoginPressed(context: context);
                     },
@@ -170,9 +170,9 @@ class _LoginPageState extends State<LoginPage> {
                             RegisterPage.routeName,
                           );
                         },
-                        child: const Text(
-                          "Dont have an account yet?",
-                          style: TextStyle(
+                        child: Text(
+                          Localization.of(context).loginRegister,
+                          style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black,
                           ),
@@ -190,9 +190,9 @@ class _LoginPageState extends State<LoginPage> {
                             ForgotPasswordPage.routeName,
                           );
                         },
-                        child: const Text(
-                          "Forgot password",
-                          style: TextStyle(
+                        child: Text(
+                          Localization.of(context).loginForgotPassword,
+                          style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black,
                           ),

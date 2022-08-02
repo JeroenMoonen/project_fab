@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:project_fab/components/avatar.dart';
 import 'package:project_fab/components/time_ago.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/models/checkin.dart';
 import 'package:project_fab/models/comment.dart';
 import 'package:project_fab/pages/comment/comment_list.dart';
@@ -47,16 +48,16 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
             keyboardType: TextInputType.multiline,
             maxLength: 255,
             controller: _commentController,
-            decoration: const InputDecoration(
-              hintText: 'Leave a message..',
-              contentPadding: EdgeInsets.symmetric(
+            decoration: InputDecoration(
+              hintText: Localization.of(context).checkinLeaveAMessage,
+              contentPadding: const EdgeInsets.symmetric(
                 horizontal: 5.0,
                 vertical: 5.0,
               ),
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black, width: 0.0),
               ),
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black, width: 0.0),
               ),
             ),
@@ -288,9 +289,9 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
               padding: const EdgeInsets.only(bottom: 5, left: 15),
               child: Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Cheers & comments',
-                  style: TextStyle(
+                child: Text(
+                  Localization.of(context).checkinCheersAndComments,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                   ),
                 ),

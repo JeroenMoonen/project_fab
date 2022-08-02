@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/input.dart';
 import 'package:project_fab/components/submit_button.dart';
+import 'package:project_fab/localization/localization.dart';
 
 import 'package:project_fab/pages/onboarding/login_page.dart';
 
@@ -60,25 +61,25 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             Column(
               children: [
                 Column(
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      "Forgot password",
-                      style: TextStyle(
+                      Localization.of(context).forgotPasswordTitle,
+                      style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      "No problem, we got you.",
-                      style: TextStyle(
+                      Localization.of(context).forgotPasswordSubtitle,
+                      style: const TextStyle(
                         fontSize: 15,
                         color: Colors.grey,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     )
                   ],
@@ -90,14 +91,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: Column(
                     children: [
                       makeInput(
-                        label: "E-mail",
+                        label: Localization.of(context).forgotPasswordEmail,
                         controller: _emailController,
                       ),
                     ],
                   ),
                 ),
                 SubmitButton(
-                  label: 'Send me a reset link',
+                  label: Localization.of(context).forgotPasswordSubmit,
                   onPressed: () => {onResetPressed(context: context)},
                 ),
                 const SizedBox(
@@ -114,9 +115,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           (_) => false,
                         );
                       },
-                      child: const Text(
-                        "Nevermind, I remember now!",
-                        style: TextStyle(
+                      child: Text(
+                        Localization.of(context).forgotPasswordIDoRemember,
+                        style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
                         ),

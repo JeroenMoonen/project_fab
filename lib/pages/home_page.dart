@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/pages/discover/discover_page.dart';
 import 'package:project_fab/pages/feed_page.dart';
 import 'package:project_fab/pages/people/people_page.dart';
@@ -58,22 +59,22 @@ class _HomePageState extends State<HomePage> {
           });
         },
         currentIndex: _activePageIndex,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'home',
+            icon: const Icon(Icons.home),
+            label: Localization.of(context).home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group_work_outlined),
-            label: 'discover',
+            icon: const Icon(Icons.group_work_outlined),
+            label: Localization.of(context).discover,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'people',
+            icon: const Icon(Icons.people),
+            label: Localization.of(context).people,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'profile',
+            icon: const Icon(Icons.person),
+            label: Localization.of(context).profile,
           ),
         ],
       ),

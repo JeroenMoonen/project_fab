@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_fab/components/avatar.dart';
+import 'package:project_fab/localization/localization.dart';
 import 'package:project_fab/models/user.dart';
 import 'package:project_fab/pages/onboarding/login_page.dart';
 import 'package:project_fab/services/user_service.dart';
@@ -141,9 +142,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding:
                                     const EdgeInsets.only(top: 15, bottom: 5),
-                                child: const Text(
-                                  "Check-ins",
-                                  style: TextStyle(
+                                child: Text(
+                                  Localization.of(context).profileCheckins,
+                                  style: const TextStyle(
                                     color: Colors.black54,
                                   ),
                                 ),
@@ -165,9 +166,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding:
                                     const EdgeInsets.only(top: 15, bottom: 5),
-                                child: const Text(
-                                  "Friends",
-                                  style: TextStyle(
+                                child: Text(
+                                  Localization.of(context).profileFriends,
+                                  style: const TextStyle(
                                     color: Colors.black54,
                                   ),
                                 ),
@@ -189,9 +190,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 5),
-                                child: const Text(
-                                  "Followers",
-                                  style: TextStyle(
+                                child: Text(
+                                  Localization.of(context).profileFollowers,
+                                  style: const TextStyle(
                                     color: Colors.black54,
                                   ),
                                 ),
