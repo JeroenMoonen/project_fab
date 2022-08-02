@@ -8,9 +8,7 @@ class CommentListItem extends StatelessWidget {
 
   const CommentListItem({Key? key, required this.comment}) : super(key: key);
 
-  void onLongPress() {
-    print('todo: remove comment.');
-  }
+  void onLongPress() {}
 
   @override
   Widget build(BuildContext context) {

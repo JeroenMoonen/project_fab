@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:project_fab/models/checkin.dart';
 import 'package:project_fab/pages/checkin/add_checkin.dart';
-import 'package:project_fab/pages/checkin/checkin_item.dart';
+import 'package:project_fab/pages/checkin/checkin_list_item.dart';
 import 'package:project_fab/services/checkin_service.dart';
 
 class CheckinListPage extends StatefulWidget {

@@ -275,14 +275,14 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
         elevation: 0,
         child: _bottomComment(checkin.id),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            imageTop(checkin),
-            whoItPosted(checkin),
-            content(checkin),
-            dividerForComments(),
-            Padding(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(child: imageTop(checkin)),
+          SliverToBoxAdapter(child: whoItPosted(checkin)),
+          SliverToBoxAdapter(child: content(checkin)),
+          SliverToBoxAdapter(child: dividerForComments()),
+          SliverToBoxAdapter(
+            child: Padding(
               padding: const EdgeInsets.only(bottom: 5, left: 15),
               child: Container(
                 alignment: Alignment.centerLeft,
@@ -294,15 +294,12 @@ class _CheckinDetailPageState extends State<CheckinDetailPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: CommentList(
-                pagingController: _pagingController,
-                checkinId: checkin.id,
-              ),
-            ),
-          ],
-        ),
+          ),
+          CommentList(
+            checkinId: checkin.id,
+            pagingController: _pagingController,
+          ),
+        ],
       ),
     );
   }
