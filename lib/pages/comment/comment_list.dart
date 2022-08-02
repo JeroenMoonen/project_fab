@@ -52,14 +52,22 @@ class CommentListState extends State<CommentList> {
   @override
   Widget build(BuildContext context) {
     return PagedSliverList<int, Comment>(
-      // physics: const NeverScrollableScrollPhysics(),
       pagingController: widget.pagingController,
       builderDelegate: PagedChildBuilderDelegate<Comment>(
         animateTransitions: true,
+        newPageProgressIndicatorBuilder: (BuildContext context) {
+          return const Center(
+            child: Text('Loading comments..'),
+          );
+        },
+        noMoreItemsIndicatorBuilder: null,
         noItemsFoundIndicatorBuilder: (BuildContext context) {
           return Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+              padding: const EdgeInsets.symmetric(
+                vertical: 32,
+                horizontal: 16,
+              ),
               child: Column(
                 children: <Widget>[
                   Text(
